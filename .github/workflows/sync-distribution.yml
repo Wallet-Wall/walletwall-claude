@@ -1,0 +1,97 @@
+name: Sync Claude distribution
+
+on:
+  push:
+    branches:
+      - feat/submission-grade-bootstrap
+    paths:
+      - .github/source-pin.json
+      - .github/workflows/sync-distribution.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-claude-distribution
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout distribution repo
+        uses: actions/checkout@v4
+        with:
+          path: distribution
+          fetch-depth: 0
+
+      - name: Read pinned source
+        id: pin
+        shell: bash
+        run: |
+          set -euo pipefail
+          repo=$(node -p "require('./distribution/.github/source-pin.json').sourceRepository")
+          sha=$(node -p "require('./distribution/.github/source-pin.json').sourceCommit")
+          [[ "$repo" == "Wallet-Wall/walletwall-copilot" ]]
+          [[ "$sha" =~ ^[0-9a-f]{40}$ ]]
+          echo "repo=$repo" >> "$GITHUB_OUTPUT"
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout exact reviewed source
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ steps.pin.outputs.repo }}
+          ref: ${{ steps.pin.outputs.sha }}
+          path: source
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: source/package-lock.json
+
+      - name: Install source dependencies
+        working-directory: source
+        run: npm ci --ignore-scripts
+
+      - name: Build deterministic Claude Directory package
+        working-directory: source
+        env:
+          WALLETWALL_SOURCE_SHA: ${{ steps.pin.outputs.sha }}
+        run: npm run build:claude-directory
+
+      - name: Replace distribution payload atomically
+        shell: bash
+        run: |
+          set -euo pipefail
+          rsync -a --delete \
+            --exclude='.git/' \
+            --exclude='.github/' \
+            source/dist/claude-directory/ distribution/
+
+      - name: Verify generated provenance pin
+        shell: bash
+        run: |
+          set -euo pipefail
+          expected='${{ steps.pin.outputs.sha }}'
+          actual=$(node -p "require('./distribution/PROVENANCE.json').sourceCommit")
+          repo=$(node -p "require('./distribution/PROVENANCE.json').sourceRepository")
+          [[ "$actual" == "$expected" ]]
+          [[ "$repo" == "Wallet-Wall/walletwall-copilot" ]]
+
+      - name: Commit generated distribution
+        working-directory: distribution
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- . ':!.github'; then
+            echo 'Generated distribution already matches the pinned source.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A -- . ':!.github'
+          git commit -m "build: sync Claude distribution from ${{ steps.pin.outputs.sha }}"
+          git push origin HEAD:${GITHUB_REF_NAME}
