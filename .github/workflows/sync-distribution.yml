@@ -3,7 +3,8 @@ name: Sync Claude distribution
 on:
   push:
     branches:
-      - feat/submission-grade-bootstrap
+      - main
+      - release/canonical-source-pin
     paths:
       - .github/source-pin.json
       - .github/workflows/sync-distribution.yml
@@ -13,7 +14,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: sync-claude-distribution
+  group: sync-claude-distribution-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
