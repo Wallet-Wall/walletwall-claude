@@ -97,8 +97,7 @@ jobs:
         run: |
           set -euo pipefail
           node --input-type=module <<'NODE'
-          import { Client } from './node_modules/@modelcontextprotocol/sdk/dist/esm/client/index.js';
-          import { StdioClientTransport } from './node_modules/@modelcontextprotocol/sdk/dist/esm/client/stdio.js';
+          import { spawn } from 'node:child_process';
 
           const expected = [
             'assess_vault_readiness',
@@ -108,23 +107,80 @@ jobs:
             'resolve_asset',
             'trace_provenance',
           ];
-          const transport = new StdioClientTransport({ command: process.execPath, args: ['./server/walletwall-mcp.mjs'], stderr: 'pipe' });
+
+          const child = spawn(process.execPath, ['./server/walletwall-mcp.mjs'], {
+            stdio: ['pipe', 'pipe', 'pipe'],
+          });
+          let stdout = '';
           let stderr = '';
-          transport.stderr?.on('data', chunk => { if (stderr.length < 8192) stderr += chunk.toString('utf8'); });
-          const client = new Client({ name: 'walletwall-claude-ci', version: '0' });
+          const pending = new Map();
+          const timeout = setTimeout(() => {
+            child.kill();
+            throw new Error(`MCP smoke timed out. stderr: ${stderr.trim()}`);
+          }, 5000);
+
+          function send(message) {
+            child.stdin.write(`${JSON.stringify(message)}\n`);
+          }
+
+          function request(id, method, params = {}) {
+            return new Promise((resolve, reject) => {
+              pending.set(id, { resolve, reject });
+              send({ jsonrpc: '2.0', id, method, params });
+            });
+          }
+
+          child.stderr.on('data', chunk => {
+            if (stderr.length < 8192) stderr += chunk.toString('utf8');
+          });
+          child.stdout.on('data', chunk => {
+            stdout += chunk.toString('utf8');
+            while (stdout.includes('\n')) {
+              const index = stdout.indexOf('\n');
+              const line = stdout.slice(0, index).replace(/\r$/, '');
+              stdout = stdout.slice(index + 1);
+              if (!line) continue;
+              let message;
+              try {
+                message = JSON.parse(line);
+              } catch (error) {
+                clearTimeout(timeout);
+                child.kill();
+                throw new Error(`invalid JSON-RPC from MCP server: ${line}`, { cause: error });
+              }
+              if (message.id !== undefined && pending.has(message.id)) {
+                const waiter = pending.get(message.id);
+                pending.delete(message.id);
+                if (message.error) waiter.reject(new Error(JSON.stringify(message.error)));
+                else waiter.resolve(message.result);
+              }
+            }
+          });
+          child.on('exit', code => {
+            if (code !== null && code !== 0 && pending.size > 0) {
+              for (const waiter of pending.values()) waiter.reject(new Error(`MCP server exited ${code}: ${stderr.trim()}`));
+              pending.clear();
+            }
+          });
+
           try {
-            await client.connect(transport);
-            const version = client.getServerVersion();
-            if (version?.name !== 'walletwall-mcp') throw new Error(`unexpected MCP server name: ${version?.name ?? 'missing'}`);
-            const { tools } = await client.listTools();
-            const names = tools.map(t => t.name).sort();
+            const initialized = await request(1, 'initialize', {
+              protocolVersion: '2025-11-25',
+              capabilities: {},
+              clientInfo: { name: 'walletwall-claude-ci', version: '0' },
+            });
+            if (initialized?.serverInfo?.name !== 'walletwall-mcp') {
+              throw new Error(`unexpected MCP server name: ${initialized?.serverInfo?.name ?? 'missing'}`);
+            }
+            send({ jsonrpc: '2.0', method: 'notifications/initialized' });
+            const listed = await request(2, 'tools/list');
+            const names = (listed?.tools ?? []).map(tool => tool.name).sort();
             if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error(`tool surface changed: ${names.join(', ')}`);
             console.log(`MCP smoke passed with ${names.length} tools.`);
-          } catch (error) {
-            if (stderr.trim()) console.error(stderr.trim());
-            throw error;
           } finally {
-            await client.close().catch(() => undefined);
+            clearTimeout(timeout);
+            child.stdin.end();
+            child.kill();
           }
           NODE
 
