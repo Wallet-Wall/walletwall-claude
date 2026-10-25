@@ -1,0 +1,196 @@
+name: Verify Claude distribution
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - feat/submission-grade-bootstrap
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+
+      - name: Verify structure, provenance, and policy boundaries
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs = require('node:fs');
+          const path = require('node:path');
+          const crypto = require('node:crypto');
+
+          const root = process.cwd();
+          const required = [
+            '.claude-plugin/plugin.json',
+            '.mcp.json',
+            'LICENSE',
+            'README.md',
+            'PROVENANCE.json',
+            'server/walletwall-mcp.mjs',
+            'skills/vault-readiness/SKILL.md',
+            'skills/walletwall-authority/SKILL.md',
+            'skills/walletwall-evidence/SKILL.md',
+            'skills/walletwall-evidence-audit/SKILL.md',
+          ];
+          for (const rel of required) {
+            if (!fs.existsSync(path.join(root, rel))) throw new Error(`missing required file: ${rel}`);
+          }
+
+          const plugin = JSON.parse(fs.readFileSync('.claude-plugin/plugin.json', 'utf8'));
+          if (plugin.name !== 'walletwall') throw new Error(`unexpected plugin name: ${plugin.name}`);
+          if (!/^\d+\.\d+\.\d+$/.test(plugin.version ?? '')) throw new Error('plugin version must be explicit semver');
+          if (typeof plugin.description !== 'string' || plugin.description.length === 0) throw new Error('plugin description required');
+
+          const mcp = JSON.parse(fs.readFileSync('.mcp.json', 'utf8'));
+          if (JSON.stringify(Object.keys(mcp)) !== JSON.stringify(['walletwall'])) throw new Error('exactly one MCP server named walletwall is required');
+          const server = mcp.walletwall;
+          if (server.command !== 'node') throw new Error('WalletWall MCP must launch with node');
+          if (JSON.stringify(server.args) !== JSON.stringify(['${CLAUDE_PLUGIN_ROOT}/server/walletwall-mcp.mjs'])) throw new Error('WalletWall MCP entry path changed');
+          if ('env' in server) throw new Error('Claude MCP config must not inject environment variables or credentials');
+          const serializedMcp = JSON.stringify(mcp);
+          if (/https?:\/\//i.test(serializedMcp)) throw new Error('Claude MCP config must not point to a remote server');
+
+          const pin = JSON.parse(fs.readFileSync('.github/source-pin.json', 'utf8'));
+          const provenance = JSON.parse(fs.readFileSync('PROVENANCE.json', 'utf8'));
+          if (provenance.schemaVersion !== '1') throw new Error('unsupported provenance schema');
+          if (provenance.sourceRepository !== pin.sourceRepository) throw new Error('provenance repository does not match source pin');
+          if (provenance.sourceCommit !== pin.sourceCommit) throw new Error('provenance commit does not match source pin');
+          if (!Array.isArray(provenance.files) || provenance.files.length === 0) throw new Error('provenance file manifest missing');
+          if (provenance.files.length > 512) throw new Error(`distribution has ${provenance.files.length} manifested files; max 512`);
+
+          const media = /\.(?:png|jpe?g|gif|webp|svg|woff2?|ttf|otf)$/i;
+          const seen = new Set();
+          for (const entry of provenance.files) {
+            if (seen.has(entry.path)) throw new Error(`duplicate provenance path: ${entry.path}`);
+            seen.add(entry.path);
+            const absolute = path.join(root, ...entry.path.split('/'));
+            if (!fs.existsSync(absolute) || !fs.statSync(absolute).isFile()) throw new Error(`manifested file missing: ${entry.path}`);
+            const bytes = fs.readFileSync(absolute);
+            if (bytes.length !== entry.bytes) throw new Error(`size mismatch: ${entry.path}`);
+            const digest = crypto.createHash('sha512').update(bytes).digest('hex');
+            if (digest !== entry.sha512) throw new Error(`SHA-512 mismatch: ${entry.path}`);
+            if (!media.test(entry.path) && bytes.length > 256 * 1024) throw new Error(`non-media file exceeds 256 KiB: ${entry.path}`);
+          }
+
+          const ajv = fs.readFileSync('node_modules/@modelcontextprotocol/sdk/dist/esm/validation/ajv-provider.js', 'utf8');
+          if (!ajv.includes('SDK JSON Schema validation is disabled in the WalletWall Claude Directory package.')) {
+            throw new Error('fail-closed AJV boundary missing');
+          }
+
+          console.log(`Verified ${provenance.files.length} provenance entries from ${provenance.sourceCommit}.`);
+          NODE
+
+      - name: Smoke exact WalletWall MCP tool surface
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          import { spawn } from 'node:child_process';
+
+          const expected = [
+            'assess_vault_readiness',
+            'check_invariants',
+            'inspect_evidence',
+            'normalize_observation',
+            'resolve_asset',
+            'trace_provenance',
+          ];
+
+          const child = spawn(process.execPath, ['./server/walletwall-mcp.mjs'], {
+            stdio: ['pipe', 'pipe', 'pipe'],
+          });
+          let stdout = '';
+          let stderr = '';
+          const pending = new Map();
+          const timeout = setTimeout(() => {
+            child.kill();
+            throw new Error(`MCP smoke timed out. stderr: ${stderr.trim()}`);
+          }, 5000);
+
+          function send(message) {
+            child.stdin.write(`${JSON.stringify(message)}\n`);
+          }
+
+          function request(id, method, params = {}) {
+            return new Promise((resolve, reject) => {
+              pending.set(id, { resolve, reject });
+              send({ jsonrpc: '2.0', id, method, params });
+            });
+          }
+
+          child.stderr.on('data', chunk => {
+            if (stderr.length < 8192) stderr += chunk.toString('utf8');
+          });
+          child.stdout.on('data', chunk => {
+            stdout += chunk.toString('utf8');
+            while (stdout.includes('\n')) {
+              const index = stdout.indexOf('\n');
+              const line = stdout.slice(0, index).replace(/\r$/, '');
+              stdout = stdout.slice(index + 1);
+              if (!line) continue;
+              let message;
+              try {
+                message = JSON.parse(line);
+              } catch (error) {
+                clearTimeout(timeout);
+                child.kill();
+                throw new Error(`invalid JSON-RPC from MCP server: ${line}`, { cause: error });
+              }
+              if (message.id !== undefined && pending.has(message.id)) {
+                const waiter = pending.get(message.id);
+                pending.delete(message.id);
+                if (message.error) waiter.reject(new Error(JSON.stringify(message.error)));
+                else waiter.resolve(message.result);
+              }
+            }
+          });
+          child.on('exit', code => {
+            if (code !== null && code !== 0 && pending.size > 0) {
+              for (const waiter of pending.values()) waiter.reject(new Error(`MCP server exited ${code}: ${stderr.trim()}`));
+              pending.clear();
+            }
+          });
+
+          try {
+            const initialized = await request(1, 'initialize', {
+              protocolVersion: '2025-11-25',
+              capabilities: {},
+              clientInfo: { name: 'walletwall-claude-ci', version: '0' },
+            });
+            if (initialized?.serverInfo?.name !== 'walletwall-mcp') {
+              throw new Error(`unexpected MCP server name: ${initialized?.serverInfo?.name ?? 'missing'}`);
+            }
+            send({ jsonrpc: '2.0', method: 'notifications/initialized' });
+            const listed = await request(2, 'tools/list');
+            const names = (listed?.tools ?? []).map(tool => tool.name).sort();
+            if (JSON.stringify(names) !== JSON.stringify(expected)) throw new Error(`tool surface changed: ${names.join(', ')}`);
+            console.log(`MCP smoke passed with ${names.length} tools.`);
+          } finally {
+            clearTimeout(timeout);
+            child.stdin.end();
+            child.kill();
+          }
+          NODE
+
+      - name: Reject obvious execution capability drift
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -RIE --exclude-dir=.git --exclude-dir=.github \
+            'eth_sendRawTransaction|eth_sendTransaction|personal_sign|eth_signTransaction|wallet_sendCalls|sendTransaction\(|broadcastTransaction\(|transferFrom\(' \
+            server skills .mcp.json; then
+            echo 'Potential signing, broadcast, or transfer capability detected.' >&2
+            exit 1
+          fi
