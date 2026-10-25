@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1",
   "sourceRepository": "Wallet-Wall/walletwall-copilot",
-  "sourceCommit": "4bf24b8536b8b040b36bbfdea1745ed9e9e13fee",
+  "sourceCommit": "4e180494a2bdfc3070f4bb5b47b7eed8fe5979b0",
   "files": [
     {
       "path": ".claude-plugin/plugin.json",
@@ -1505,8 +1505,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 6473,
-      "sha512": "0082e554329f1c8e2694548da344dfd80856678d0e3cefeacd0ada0c84a87b5324e8236bb09b5ec166c3ca126023db7279e44b0dd4fc36ee268f4e6ed9508f4e"
+      "bytes": 5390,
+      "sha512": "3ca98219ae5d95ee41f8cf93fb0ac4d2567cbb842dd65772e36878d8d1c156cc6806ac29159ee06a558ae0cd14d8b5e208379d291162cfd44d3a996098d9d044"
     },
     {
       "path": "server/walletwall-mcp.mjs",

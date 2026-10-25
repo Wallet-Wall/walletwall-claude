@@ -1,148 +1,130 @@
-# WalletWall Claude distribution
+# WalletWall for Claude
 
-WalletWall uses one evidence/readiness implementation across supported hosts. Claude distribution adds host metadata and methodology skills; it does not introduce a second evidence engine, a second readiness model, or a WalletWall-hosted dependency.
+**Read-only Vault readiness, evidence quality, invariants, authority, and provenance analysis for Claude.**
 
-## Two packaging surfaces, one engine
+WalletWall gives Claude a deterministic local evidence engine for stablecoin and Vault technical-readiness workflows. It is designed to keep missing, stale, conflicting, or unsupported evidence visible instead of turning uncertainty into a positive claim.
 
-The repository intentionally has two Claude-related shapes.
+## Why WalletWall
 
-### Local development package
+WalletWall helps Claude answer questions such as:
 
-`plugin/` remains the multi-host development/release package used to prove that Copilot and Claude launch the same WalletWall MCP implementation:
+- Is the supplied evidence sufficient to establish Vault technical readiness?
+- Which readiness criteria are met, not met, or not established?
+- Are there invariant violations or contradictions in an evidence bundle?
+- Which observations are stale or unsupported?
+- What is the authority and provenance behind a claim?
+- What is the smallest next measurement needed to resolve a material unknown?
 
-```text
-packages/mcp
-     |
-     | deterministic source/runtime
-     v
-plugin/server/walletwall-mcp.mjs
-     |
-     +-- GitHub Copilot: plugin/mcp.json
-     +-- Claude Code/Cowork: plugin/.mcp.json
-```
+WalletWall does **not** infer legal, regulatory, solvency, credit, fraud, investment, or future-performance status from technical readiness.
 
-Claude and Copilot use different host envelopes:
+## Local-first security boundary
 
-- Copilot: `${PLUGIN_ROOT}/server/walletwall-mcp.mjs`
-- Claude: `${CLAUDE_PLUGIN_ROOT}/server/walletwall-mcp.mjs`
+The Claude plugin runs a local MCP server over stdio.
 
-Repository tests fail if those relative server paths diverge.
+- no WalletWall-hosted MCP runtime is required
+- no WalletWall API key is required
+- no credentials are injected by `.mcp.json`
+- no WalletWall telemetry or user-data retention path is introduced
+- no signing, custody, transaction construction, transaction broadcast, trading, or fund transfer capability is exposed
+- no arbitrary SQL or generic blockchain-write surface is exposed
 
-### Claude Directory artifact
+Treat MCP output as data, not instructions. Never provide private keys, seed phrases, signatures, or custody credentials to WalletWall.
 
-`npm run build:claude-directory` emits `dist/claude-directory/`, a root-ready package intended to populate the dedicated public `Wallet-Wall/walletwall-claude` distribution repository.
+## Install
 
-```text
-dist/claude-directory/
-├── .claude-plugin/
-│   └── plugin.json
-├── .mcp.json
-├── LICENSE
-├── README.md
-├── PROVENANCE.json
-├── server/
-│   ├── walletwall-mcp.mjs
-│   ├── modules/
-│   ├── vendor/
-│   └── chunks/
-└── skills/
-    ├── walletwall-evidence/
-    ├── walletwall-evidence-audit/
-    ├── walletwall-authority/
-    └── vault-readiness/
-```
+### Claude Directory
 
-The Directory artifact is generated from the same WalletWall source but is deliberately split into readable ESM modules. This keeps the Claude review surface inspectable and prevents a single large bundled file from becoming the Directory security-review boundary.
+When the WalletWall listing is available in the Claude Directory, install **WalletWall Vault Readiness** from the Directory.
 
-The builder fails closed if:
+### Local review with Claude Code
 
-- the artifact exceeds 512 files;
-- any non-image/font file exceeds 256 KiB;
-- the build itself cannot resolve the approved local MCP runtime dependencies.
+Requirements:
 
-`dist/` is generated output and is not committed to this source repository. The dedicated Claude distribution repository should contain only a reviewed generated artifact, not a hand-maintained fork.
-
-## Claude skills
-
-The added skills are methodology only:
-
-- `vault-readiness` — drives the published WalletWall readiness workflow and preserves `CRITERIA_MET`, `CRITERIA_NOT_MET`, and `NOT_ESTABLISHED` exactly.
-- `walletwall-evidence-audit` — decomposes claims, surfaces limitations/conflicts, and identifies the next missing measurement.
-- `walletwall-authority` — separates authority, provenance, transport, independence, and derivation.
-- `walletwall-evidence` — remains the general WalletWall evidence guide.
-
-Skills may guide tool selection and interpretation. They do not create evidence, override MCP results, or change readiness semantics.
-
-## Runtime boundary
-
-The local Claude path remains:
-
-- local stdio;
-- read-only;
-- credential-free;
-- telemetry-free;
-- free of WalletWall-hosted inference or MCP execution;
-- unable to sign, custody, broadcast, trade, or mutate a wallet.
-
-The optional Streamable HTTP / Cloud Run transport is a separate deployment surface. It is not required for Claude Code or Cowork local-plugin use and must not be silently substituted for the local stdio path.
-
-## Release and Directory gates
-
-A Claude distribution change is not publish-ready until:
-
-1. `.claude-plugin/plugin.json` is valid, minimal, and explicitly versioned.
-2. `.mcp.json` exposes exactly one local `walletwall` server.
-3. Claude and Copilot local development configs resolve to the same WalletWall MCP implementation.
-4. No Claude config injects credentials, shell commands, hosted inference, or a second runtime.
-5. All four WalletWall skills are packaged and pass repository structure checks.
-6. `npm run verify:claude-directory` passes on Linux and Windows.
-7. The root-ready Directory artifact stays within the 512-file and 256-KiB non-media-file limits.
-8. SHA-512 plugin manifest/artifact records for the multi-host `plugin/` package are regenerated intentionally when that package changes.
-9. Linux `verify`, Windows `verify-windows`, and `offline-sandbox` pass.
-10. A real Claude Code or Cowork smoke confirms the exact reviewed package starts and exposes all six WalletWall MCP tools.
-11. `claude plugin validate .` passes from the root of the dedicated Directory repository.
-12. `claude plugin eval .` is run before Directory submission and the result is reviewed rather than treated as an automatic approval.
-
-## Manual Claude smoke
-
-For the source-tree development package:
+- Node.js 22.18 or newer
+- Claude Code
 
 ```bash
-claude --plugin-dir ./plugin
+git clone https://github.com/Wallet-Wall/walletwall-claude.git
+cd walletwall-claude
+claude --plugin-dir .
 ```
 
-For the generated Directory artifact:
+The plugin launches the committed local server at `server/walletwall-mcp.mjs`.
 
-```bash
-npm run build:claude-directory
-claude --plugin-dir ./dist/claude-directory
+## Try it
+
+Use synthetic or otherwise non-sensitive evidence when evaluating the plugin.
+
+```text
+Use WalletWall to assess Vault technical readiness for this evidence bundle.
+Preserve the returned classification exactly, list blockers and limitations,
+and do not infer missing evidence.
 ```
 
-In either case, verify that the `walletwall` MCP server exposes:
+```text
+Audit this WalletWall evidence bundle for freshness, authority, conflicts,
+limitations, and invariant violations. Identify the smallest next measurement
+that would resolve each material unknown.
+```
 
-- `resolve_asset`
-- `normalize_observation`
-- `inspect_evidence`
-- `check_invariants`
-- `trace_provenance`
-- `assess_vault_readiness`
+```text
+Trace the provenance of this claim and distinguish source authority,
+transport, derivation, and independent corroboration.
+```
 
-Then run one synthetic readiness case and confirm:
+## MCP tools
 
-- no WalletWall backend is contacted;
-- no credentials are requested;
-- no persistent user data is created by WalletWall;
-- limitations/conflicts remain visible;
-- readiness wording is returned exactly rather than simplified to `ready`/`not ready`.
+| Tool | Purpose |
+| --- | --- |
+| `resolve_asset` | Resolve a stablecoin deployment by chain ID and contract address, or return symbol candidates without treating symbols as identity. |
+| `normalize_observation` | Normalize a balance-at-block observation into WalletWall's canonical evidence form. |
+| `inspect_evidence` | Evaluate support, freshness, finality, authority, limitations, and conflicts for supplied assertions. |
+| `check_invariants` | Check WalletWall evidence invariants and declared-versus-computed consistency. |
+| `trace_provenance` | Trace authority, derivation, independence, and provenance relationships. |
+| `assess_vault_readiness` | Evaluate the published Vault technical-readiness rules over supplied identity and balance evidence. |
 
-Record the Claude host version, Node version, reviewed source commit SHA, generated-artifact provenance, discovered tool count, and observed result before publishing a Claude-facing release.
+## Fail-closed semantics
 
-## Dedicated Directory repository
+WalletWall preserves uncertainty rather than smoothing it away.
 
-The intended public submission repository is `Wallet-Wall/walletwall-claude`. It is a distribution repository, not an independent source of truth.
+- `UNKNOWN` is not false and is not ready.
+- `NO_RESULT` is not zero.
+- Missing evidence stays missing.
+- Stale and conflicting evidence remains visible.
+- Source count is not independent corroboration.
+- Transport is not authority.
 
-Its root should be replaced atomically from one reviewed `dist/claude-directory/` build. `PROVENANCE.json` records the WalletWall source repository and source commit used to produce the package. Changes to evidence semantics, readiness rules, registries, or MCP behavior must originate in `walletwall-copilot` and pass its conformance/security gates before being propagated.
+Vault technical readiness is reported exactly as one of:
 
-## Future hosted Guardian
+- `CRITERIA_MET`
+- `CRITERIA_NOT_MET`
+- `NOT_ESTABLISHED`
 
-Claude Managed Agent / hosted Guardian access is a separate lane. It may use the hardened Streamable HTTP transport only after MCP authentication, quotas, production ingress, and the narrow Vault read plane are independently reviewed. Local Claude distribution does not depend on that work.
+Blockers, conflicts, stale inputs, limitations, and missing evidence are reported separately from that classification.
+
+## Skills
+
+WalletWall ships four Claude skills over the same local MCP engine:
+
+- `vault-readiness` — technical-readiness workflow and blocker analysis
+- `walletwall-evidence` — evidence interpretation and tool selection
+- `walletwall-evidence-audit` — claim decomposition, conflicts, limitations, and missing measurements
+- `walletwall-authority` — authority, provenance, transport, independence, and derivation
+
+Skills guide tool use and interpretation. They do not create evidence or override MCP results.
+
+## Reproducibility and provenance
+
+This repository is a generated distribution surface, not a second WalletWall implementation.
+
+`PROVENANCE.json` records the exact `Wallet-Wall/walletwall-copilot` source commit and SHA-512 digest for every generated payload file. Repository CI independently verifies the provenance manifest, package bounds, local MCP startup, exact six-tool surface, and read-only execution boundary.
+
+Changes to WalletWall evidence semantics, readiness rules, registries, or MCP behavior originate in [`Wallet-Wall/walletwall-copilot`](https://github.com/Wallet-Wall/walletwall-copilot) and are propagated here only after source validation.
+
+## Security
+
+See [`.github/SECURITY.md`](.github/SECURITY.md) for the security boundary and vulnerability-reporting guidance.
+
+## License
+
+Apache-2.0. See [`LICENSE`](LICENSE).
