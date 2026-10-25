@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout distribution repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           path: distribution
           fetch-depth: 0
@@ -39,14 +39,14 @@ jobs:
           echo "sha=$sha" >> "$GITHUB_OUTPUT"
 
       - name: Checkout exact reviewed source
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           repository: ${{ steps.pin.outputs.repo }}
           ref: ${{ steps.pin.outputs.sha }}
           path: source
 
       - name: Setup Node.js 22
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22
           cache: npm
@@ -86,12 +86,13 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if git diff --quiet -- . ':!.github'; then
+          git add -A -- . ':!.github'
+          if git diff --cached --quiet; then
             echo 'Generated distribution already matches the pinned source.'
             exit 0
           fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -A -- . ':!.github'
           git commit -m "build: sync Claude distribution from ${{ steps.pin.outputs.sha }}"
+          git pull --rebase origin "$GITHUB_REF_NAME"
           git push origin HEAD:${GITHUB_REF_NAME}
