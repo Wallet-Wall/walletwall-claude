@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1",
   "sourceRepository": "Wallet-Wall/walletwall-copilot",
-  "sourceCommit": "0b9e544fecd7b39b6d4483318c2408d4fd1a2c65",
+  "sourceCommit": "7cd6b26c8fb48e4efbbbbde87937d352fae48780",
   "files": [
     {
       "path": ".claude-plugin/plugin.json",
@@ -1505,33 +1505,33 @@
     },
     {
       "path": "README.md",
-      "bytes": 5390,
-      "sha512": "3ca98219ae5d95ee41f8cf93fb0ac4d2567cbb842dd65772e36878d8d1c156cc6806ac29159ee06a558ae0cd14d8b5e208379d291162cfd44d3a996098d9d044"
+      "bytes": 6905,
+      "sha512": "b9ff7184a363e2316cf74595c7ccb6e7e13ec6399257ce9e60f2286df91dbb65f8d7ecf627f1074f11f89e5b179d3dec43a969e6257e47b18d71a9d2881d5470"
     },
     {
       "path": "server/walletwall-mcp.mjs",
-      "bytes": 94819,
-      "sha512": "21a1694f3796f87b418dcb795d5354bb114a2284def7d643ffce32c5c25606ad8286fa0e1e41fff9215e83bf1a7f7cf9ad6189fd5661017ddd5847bb6669cd4f"
+      "bytes": 121531,
+      "sha512": "d8e0d7163a5353d5c1a8e8a78d550980223999c83caab6efb1c808ededac8dad437f1935b8adbf422713b7cba9e6d398907ef5b3f458b8788881bf0223feb6e3"
     },
     {
       "path": "skills/vault-readiness/SKILL.md",
-      "bytes": 2333,
-      "sha512": "1351a34d708043ceaac983052039384a9057750d9162d50d68276891b5992add690142829a6cfb46f670c42ff90de9419882bbadbee42137522495b4c2f5304f"
+      "bytes": 2637,
+      "sha512": "e640956b71f27a0c3f03de37f0d5c88184485bb7cb68387a35c7304f28210e4365b3c28df3abb0366b43ca42b1cc6523f17c8b31e7ad201c9f39c8b03cc7958e"
     },
     {
       "path": "skills/walletwall-authority/SKILL.md",
-      "bytes": 1962,
-      "sha512": "bb4d6e2c1d2bca62a225f5e90c72d6d53b0bc173aa9a67570e7e0bd167b08c5a85d8e2acd5697949be30b785620aa08c20832f5449be9b635a0d64a3a412ec08"
+      "bytes": 2094,
+      "sha512": "0aff222f2f50e21926d2003053297435f0b5b7c6dea9a6d267341000b4a9706d0c531413d73e51e8888985a41b765a3cb78a4f30717240001e3d27d95086832b"
     },
     {
       "path": "skills/walletwall-evidence-audit/SKILL.md",
-      "bytes": 2149,
-      "sha512": "249dd84402d86306923b7ae47ee6e36c81f9a52e39415eaccd565f82979247c31894034e0fbfb62106821c3cceab9cbc736314798b52e480c735a054471e4db8"
+      "bytes": 2252,
+      "sha512": "4a3f4837273bf830a85b6a76cacb42648e0245d2727ad596528caf4373d619dbeb2b02fe96500cff1e2f5ffc494805aa3389b36c793ff01177da14c934fde340"
     },
     {
       "path": "skills/walletwall-evidence/SKILL.md",
-      "bytes": 4835,
-      "sha512": "32dbbeb0a83827959f37f41a411502ea41db12113ce7991299aa7ab46e70750ca13f76c23f872c97342e84c04afeeedd8ae3947cd9f1d30bcfb7a671e1411a69"
+      "bytes": 6142,
+      "sha512": "527a38d1dcae1bac3e160afd93f315db5e87bca7cc736d68773cfaa99170e7f142929efadc983b551d51b3fb134a9ebd835e5ca1cd7c256725dc951c95d9aefe"
     }
   ]
 }
