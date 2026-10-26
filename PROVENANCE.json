@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1",
   "sourceRepository": "Wallet-Wall/walletwall-copilot",
-  "sourceCommit": "7cd6b26c8fb48e4efbbbbde87937d352fae48780",
+  "sourceCommit": "96d15f677b4be8a8c5b3a0789499996a40b8ee09",
   "files": [
     {
       "path": ".claude-plugin/plugin.json",
