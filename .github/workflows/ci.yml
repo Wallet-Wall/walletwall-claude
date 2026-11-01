@@ -92,6 +92,66 @@ jobs:
           console.log(`Verified ${provenance.files.length} provenance entries from ${provenance.sourceCommit}.`);
           NODE
 
+      - name: Verify payload shape and manifest closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs = require('node:fs');
+          const { execFileSync } = require('node:child_process');
+
+          // A merge publishes the tracked tree, so read it from git rather than from the filesystem.
+          const tracked = execFileSync('git', ['ls-files', '-z', '--format=%(objectmode) %(path)'], { encoding: 'utf8' })
+            .split(String.fromCharCode(0))
+            .filter(Boolean)
+            .map(record => {
+              const space = record.indexOf(' ');
+              return { mode: record.slice(0, space), path: record.slice(space + 1) };
+            });
+          const payload = tracked.filter(({ path }) => !path.startsWith('.github/'));
+          const under = prefix => payload.map(({ path }) => path).filter(path => path.startsWith(prefix)).sort();
+
+          const allowedRootEntries = ['.claude-plugin/', '.github/', '.mcp.json', 'LICENSE', 'PROVENANCE.json', 'README.md', 'node_modules/', 'server/', 'skills/'];
+          const rootEntries = new Set(tracked.map(({ path }) => (path.includes('/') ? `${path.split('/')[0]}/` : path)));
+          const unexpectedRootEntries = [...rootEntries].filter(entry => !allowedRootEntries.includes(entry)).sort();
+          const missingRootEntries = allowedRootEntries.filter(entry => !rootEntries.has(entry));
+          if (unexpectedRootEntries.length > 0) throw new Error(`unexpected root entries: ${unexpectedRootEntries.join(', ')}`);
+          if (missingRootEntries.length > 0) throw new Error(`missing root entries: ${missingRootEntries.join(', ')}`);
+
+          const irregular = payload.filter(({ mode }) => mode !== '100644');
+          if (irregular.length > 0) {
+            throw new Error(`payload entries must be regular non-executable files: ${irregular.map(({ mode, path }) => `${mode} ${path}`).join(', ')}`);
+          }
+
+          if (JSON.stringify(under('.claude-plugin/')) !== JSON.stringify(['.claude-plugin/plugin.json'])) {
+            throw new Error(`.claude-plugin must hold only plugin.json: ${under('.claude-plugin/').join(', ')}`);
+          }
+          // Metadata only. Component keys (commands, agents, skills, hooks, mcpServers, lspServers, outputStyles)
+          // can inline or redirect executable surface, so none of them is allowed here.
+          const allowedPluginKeys = ['name', 'displayName', 'version', 'description', 'author', 'homepage', 'repository', 'license', 'keywords'];
+          const plugin = JSON.parse(fs.readFileSync('.claude-plugin/plugin.json', 'utf8'));
+          const forbiddenPluginKeys = Object.keys(plugin).filter(key => !allowedPluginKeys.includes(key));
+          if (forbiddenPluginKeys.length > 0) throw new Error(`plugin.json keys outside the metadata allowlist: ${forbiddenPluginKeys.join(', ')}`);
+
+          const expectedSkillFiles = ['vault-readiness', 'walletwall-authority', 'walletwall-evidence', 'walletwall-evidence-audit']
+            .map(skill => `skills/${skill}/SKILL.md`)
+            .sort();
+          if (JSON.stringify(under('skills/')) !== JSON.stringify(expectedSkillFiles)) {
+            throw new Error(`skills must be exactly ${expectedSkillFiles.join(', ')}; found ${under('skills/').join(', ')}`);
+          }
+
+          const provenance = JSON.parse(fs.readFileSync('PROVENANCE.json', 'utf8'));
+          const manifested = new Set(provenance.files.map(({ path }) => path));
+          const payloadFiles = payload.map(({ path }) => path).filter(path => path !== 'PROVENANCE.json');
+          const unmanifested = payloadFiles.filter(path => !manifested.has(path));
+          if (unmanifested.length > 0) throw new Error(`tracked payload files missing from PROVENANCE.json: ${unmanifested.join(', ')}`);
+          const payloadSet = new Set(payloadFiles);
+          const untracked = [...manifested].filter(path => !payloadSet.has(path));
+          if (untracked.length > 0) throw new Error(`PROVENANCE.json lists untracked files: ${untracked.join(', ')}`);
+
+          console.log(`Verified payload shape: ${payloadFiles.length} tracked payload files, every one manifested.`);
+          NODE
+
       - name: Smoke exact WalletWall MCP tool surface
         shell: bash
         run: |
@@ -194,3 +254,97 @@ jobs:
             echo 'Potential signing, broadcast, or transfer capability detected.' >&2
             exit 1
           fi
+
+  # The verify job proves the payload agrees with PROVENANCE.json and the pin, but a pull request can rewrite all
+  # three together. This job proves origin instead: it regenerates the package from the pinned canonical source
+  # commit and requires the committed payload to be exactly that output.
+  origin:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout distribution
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          path: distribution
+          persist-credentials: false
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+
+      - name: Validate source pin
+        id: pin
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs = require('node:fs');
+          const pin = JSON.parse(fs.readFileSync('distribution/.github/source-pin.json', 'utf8'));
+          const keys = Object.keys(pin).sort().join(', ');
+          if (keys !== 'sourceCommit, sourceRepository') throw new Error(`source pin must hold exactly sourceRepository and sourceCommit; found ${keys}`);
+          if (pin.sourceRepository !== 'Wallet-Wall/walletwall-copilot') {
+            throw new Error(`source pin must name Wallet-Wall/walletwall-copilot; found ${JSON.stringify(pin.sourceRepository)}`);
+          }
+          if (typeof pin.sourceCommit !== 'string' || !/^[0-9a-f]{40}$/.test(pin.sourceCommit)) {
+            throw new Error(`source pin commit must be a full 40-character lowercase hex SHA; found ${JSON.stringify(pin.sourceCommit)}`);
+          }
+          fs.appendFileSync(process.env.GITHUB_OUTPUT, `sha=${pin.sourceCommit}\n`);
+          console.log(`Source pin: ${pin.sourceRepository}@${pin.sourceCommit}`);
+          NODE
+
+      # Fetch the canonical branch and tag history instead of the pinned SHA: GitHub also serves, by SHA, commits that
+      # are on no canonical branch (pull-request refs, fork pull requests included), so only ancestry of main proves origin.
+      - name: Checkout canonical source history
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: Wallet-Wall/walletwall-copilot
+          ref: main
+          fetch-depth: 0
+          path: source
+          persist-credentials: false
+
+      - name: Require the pinned commit on source main
+        working-directory: source
+        shell: bash
+        env:
+          PIN_SHA: ${{ steps.pin.outputs.sha }}
+        run: |
+          set -euo pipefail
+          if [ "$(git cat-file -t "$PIN_SHA" 2>/dev/null || true)" != commit ]; then
+            echo "::error::Pinned commit $PIN_SHA is not a commit in Wallet-Wall/walletwall-copilot branch or tag history."
+            exit 1
+          fi
+          if ! git merge-base --is-ancestor "$PIN_SHA" refs/remotes/origin/main; then
+            echo "::error::Pinned commit $PIN_SHA is not reachable from Wallet-Wall/walletwall-copilot main ($(git rev-parse refs/remotes/origin/main))."
+            exit 1
+          fi
+          git checkout --quiet --detach "$PIN_SHA"
+          [ "$(git rev-parse HEAD)" = "$PIN_SHA" ]
+          echo "Pinned commit $PIN_SHA is reachable from source main $(git rev-parse refs/remotes/origin/main)."
+
+      - name: Install pinned source dependencies
+        working-directory: source
+        run: npm ci --ignore-scripts
+
+      - name: Regenerate the distribution from the pinned source
+        working-directory: source
+        env:
+          WALLETWALL_SOURCE_SHA: ${{ steps.pin.outputs.sha }}
+        run: npm run build:claude-directory
+
+      - name: Require the committed payload to equal the regeneration
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Ask rsync what a sync would change. The anchored excludes skip only the top-level .git/ and .github/, and
+          # --checksum without --times compares content, links, and modes rather than checkout timestamps.
+          options=(--recursive --links --perms --checksum --delete --dry-run --itemize-changes --exclude=/.git/ --exclude=/.github/)
+          changes=$(rsync "${options[@]}" source/dist/claude-directory/ distribution/)
+          if [ -n "$changes" ]; then
+            echo "::error::The committed payload is not the regeneration of the pinned source. A sync would change:"
+            printf '%s\n' "$changes"
+            echo 'Legend: *deleting = not produced by the generator, >f+++ = generated file missing, >fc = content differs, .f...p = mode differs.'
+            exit 1
+          fi
+          echo "Committed payload equals the regeneration of the pinned source ($(find source/dist/claude-directory -type f | wc -l) files)."

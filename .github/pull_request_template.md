@@ -26,6 +26,7 @@
 ### Verification
 
 - [ ] Distribution structure/provenance verification passes.
+- [ ] Origin rebuild from the pinned source reproduces the committed payload exactly.
 - [ ] Raw stdio MCP startup passes.
 - [ ] Exact expected tool discovery passes.
 - [ ] Execution-capability drift guard passes.
