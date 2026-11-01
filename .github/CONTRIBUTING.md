@@ -41,6 +41,8 @@ A normal release follows this chain:
 5. verify `PROVENANCE.json` matches the source pin;
 6. require distribution CI to pass before merging the release PR.
 
+Distribution CI proves origin, not only self-consistency. Its `origin` job requires the pin to name `Wallet-Wall/walletwall-copilot` and a commit reachable from that repository's `main`, regenerates the package from that commit with the source's own generator, and fails on any difference from the committed tree outside `.git/` and `.github/`, including files that are missing from `PROVENANCE.json`. On a release PR that changes the pin, `origin` fails until the sync commit with the regenerated payload lands; that is expected.
+
 ## Security boundary
 
 WalletWall for Claude is local-first and read-only. Contributions must not add signing, custody, transaction construction, transaction broadcast, trading, fund transfer, arbitrary SQL, credential injection, or silent substitution of a remote MCP endpoint.

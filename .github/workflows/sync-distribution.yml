@@ -26,6 +26,8 @@ jobs:
         with:
           path: distribution
           fetch-depth: 0
+          # The pinned source's install and build run in this job, so no checkout may leave a token in .git/config.
+          persist-credentials: false
 
       - name: Read pinned source
         id: pin
@@ -45,6 +47,7 @@ jobs:
           repository: ${{ steps.pin.outputs.repo }}
           ref: ${{ steps.pin.outputs.sha }}
           path: source
+          persist-credentials: false
 
       - name: Setup Node.js 22
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
@@ -67,9 +70,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          # Anchored, so only the top-level .git/ and .github/ are kept; CI's origin check uses the same boundary.
           rsync -a --delete \
-            --exclude='.git/' \
-            --exclude='.github/' \
+            --exclude='/.git/' \
+            --exclude='/.github/' \
             source/dist/claude-directory/ distribution/
 
       - name: Verify generated provenance pin
@@ -85,6 +89,8 @@ jobs:
       - name: Commit generated distribution
         working-directory: distribution
         shell: bash
+        env:
+          PUBLISH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           git add -A -- . ':!.github'
@@ -95,5 +101,13 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git commit -m "build: sync Claude distribution from ${{ steps.pin.outputs.sha }}"
-          git pull --rebase origin "$GITHUB_REF_NAME"
-          git push origin HEAD:${GITHUB_REF_NAME}
+          # Only this step sees the write token: an explicit remote plus a one-shot credential helper that reads it
+          # from this step's environment, so it is never written to .git/config.
+          git remote add publish "https://github.com/${GITHUB_REPOSITORY}.git"
+          publish() {
+            git -c credential.helper= \
+              -c 'credential.helper=!f() { if [ "$1" = get ]; then echo username=x-access-token; echo "password=${PUBLISH_TOKEN}"; fi; }; f' \
+              "$@"
+          }
+          publish pull --rebase publish "$GITHUB_REF_NAME"
+          publish push publish "HEAD:refs/heads/${GITHUB_REF_NAME}"
