@@ -111,7 +111,7 @@ jobs:
           const payload = tracked.filter(({ path }) => !path.startsWith('.github/'));
           const under = prefix => payload.map(({ path }) => path).filter(path => path.startsWith(prefix)).sort();
 
-          const allowedRootEntries = ['.claude-plugin/', '.github/', '.mcp.json', 'LICENSE', 'PROVENANCE.json', 'README.md', 'node_modules/', 'server/', 'skills/'];
+          const allowedRootEntries = ['.claude-plugin/', '.gitattributes', '.github/', '.mcp.json', 'LICENSE', 'PROVENANCE.json', 'README.md', 'node_modules/', 'server/', 'skills/'];
           const rootEntries = new Set(tracked.map(({ path }) => (path.includes('/') ? `${path.split('/')[0]}/` : path)));
           const unexpectedRootEntries = [...rootEntries].filter(entry => !allowedRootEntries.includes(entry)).sort();
           const missingRootEntries = allowedRootEntries.filter(entry => !rootEntries.has(entry));
