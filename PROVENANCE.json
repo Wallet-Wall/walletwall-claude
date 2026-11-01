@@ -1,12 +1,17 @@
 {
   "schemaVersion": "1",
   "sourceRepository": "Wallet-Wall/walletwall-copilot",
-  "sourceCommit": "eb641bf8a0ffab0d6ea015fb553063a73ba63766",
+  "sourceCommit": "db079910003270f50863e1b325b8ef451c1eea30",
   "files": [
     {
       "path": ".claude-plugin/plugin.json",
       "bytes": 293,
       "sha512": "3acd7388cde07b5881fbb42c4780e8115aa8234d294dc5bfd4f6e94f4be2235201889c644076b889a3408086793da26b15b82ce8264dd077acfe5d522080cbee"
+    },
+    {
+      "path": ".gitattributes",
+      "bytes": 8,
+      "sha512": "e193f4b6088a9eb249c28f1bcd6f80090810995885382e73638bb07b9f2f594b203f2b2dea47009a423e80fa8ce638f9fbe43e5ba855ce5fc62887e0e00ad7e9"
     },
     {
       "path": ".mcp.json",
@@ -19,184 +24,14 @@
       "sha512": "98f6b79b778f7b0a15415bd750c3a8a097d650511cb4ec8115188e115c47053fe700f578895c097051c9bc3dfb6197c2b13a15de203273e1a3218884f86e90e8"
     },
     {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/client/auth-extensions.js",
-      "bytes": 10299,
-      "sha512": "2e740a5d8c031126e217eba39431ed0268664433342564ab20a0ef8d29608fd114f8a6813af817d3c02b4f461249d13a47db512ad53b66160e310a9781680e9e"
+      "path": "README.md",
+      "bytes": 8679,
+      "sha512": "8b3e61ba8d3d91cd5ec9cca40b45252e008ad7266034d9b14b85650df31bc413d832dc7214a3204244b674db689b590090cd3a3b62618b1dc3c6e7c0a8caba60"
     },
     {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/client/auth.js",
-      "bytes": 47017,
-      "sha512": "696bccea9449f36fad634efbc20f8137eaa7b5c1c30762ee7246ba53972f26da95b1c415b63897cfa75256eaf69fe049eb8cbd96049de14dfda5f2c83d902e74"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/client/index.js",
-      "bytes": 29275,
-      "sha512": "79614461d819f525a1d2c058f19b74202a6b5a1d9036bfa4a9ae4f4ddd9b2e230f0861380396f87804f8de3a456f444a37d20d9da7f0cfc3e2b4771a53e34e6c"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/client/middleware.js",
-      "bytes": 9918,
-      "sha512": "baf1885f257a8b7776db720499f85ae53dc73469a484b443c6816d8e4ae602888fbcb5c2796e4046988a965a0716f9d756e02fdea6446af1a0bba3a2f12097f7"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/client/sse.js",
-      "bytes": 9330,
-      "sha512": "5cfa780286dadcdd7721fa0d3520c940cde2cc8e6081ec74a8811cc7e9469a865d4cb9eb27f73b69cb8f1f1f18e5be21b948223208b0ebda7185a5a2e4784aea"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/client/stdio.js",
-      "bytes": 6569,
-      "sha512": "1cc6d51048611a1567aa0109758221482b7ae62e82f8050e2e153aa1d19357676f7fe6135257baae3cbbe31d17b7baae7d6667782a1f6432e72bf9e712bf2be9"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/client/streamableHttp.js",
-      "bytes": 23781,
-      "sha512": "a5183cfe9ec633c81f269736044651a291c9e57d346037c17a2c46bb172749095371dfde3384da8894849e5215443f68a5b49850543a4ad8ef56e87a113d6186"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/client/websocket.js",
-      "bytes": 1800,
-      "sha512": "8e03f6cdc973b71b6b7b6c00ca9633c49a707d747e03408ad8dfbc31dec1523273364b9584d548764075e89bcf3a18403ee455a4e440bfd7c1c184d8442e827f"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/examples/client/elicitationUrlExample.js",
-      "bytes": 26379,
-      "sha512": "fbfef92714d9b1949830a4c3317f3488644c81fadcebdbc06d8b6e14105ed064709b4d6f798f352ffb30991ab54e540606da191d418f3dcb14ec94f35bfcf980"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/examples/client/multipleClientsParallel.js",
-      "bytes": 5020,
-      "sha512": "0bc23fe0450dbf678884361cad43086b64c8cb6355b8ef147c0d8d7fc4167e431a43cefe096c4aa45aabe83ded72d1bb3273aef0fe95e6ee22635e206fef1d46"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/examples/client/parallelToolCallsClient.js",
-      "bytes": 6662,
-      "sha512": "d4f8bbf2e4fc77eeba79f969dd7601499dad8f1671d40b126f4555f48cab452fc2dc9c174b33d1eb8efbafdd075b3e97829e7137a793abc129cfad08cf6e7ef4"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/examples/client/simpleClientCredentials.js",
-      "bytes": 3172,
-      "sha512": "bc376e3af19bf4d2b27ee7907870251610090606759ca6138d39981f8158f7b77701db2712b5e8cc1fcb3fb32466bbb771bd518bfd462c2dee9168acc3659453"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/examples/client/simpleOAuthClient.js",
-      "bytes": 14823,
-      "sha512": "8a49886f897fc30a4948e8391499f9fa91f270cdd08c1c37cfe684e53c1f48bd99a3ec96a5989ae838cf930abafda92101c448f884fe716b38b0279606fe5b2f"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/examples/client/simpleOAuthClientProvider.js",
-      "bytes": 1385,
-      "sha512": "e2f808b8a8b33e6273481864b476cc00daf112945d839fba7a58d09a83cfa4fb643b1c417de0cf5156ef36d5de382308fd392e5370f5f93949a0a965ba9a3f04"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/examples/client/simpleStreamableHttp.js",
-      "bytes": 35160,
-      "sha512": "aa6440a756b0ba495fe73b35b6dabceb1d86976be1443113ecd0e8f36e8b30873065063bbec4bcc94de4217a63dbcb5392b4860b553d22192bd3be6516ef9984"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/examples/client/simpleTaskInteractiveClient.js",
-      "bytes": 6264,
-      "sha512": "7fd9eedb66853cc57e7ac26e3730bcc489c6eddb72956440d28a9170e849fff15d146fee22b79b29dabfe10005d76b9d4eb3efd144837f7046889b2cca7b7b31"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/examples/client/ssePollingClient.js",
-      "bytes": 3606,
-      "sha512": "a918c43c006c987ee5926d78f5a5f3dff91d50fd9390d348e3356b2f5bae33493e1b707695e9205227f2ed4695c27679c989f085657122a106caff8242ee62e0"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/examples/client/streamableHttpWithSseFallbackClient.js",
-      "bytes": 6338,
-      "sha512": "adce615c5188cfe1f689f8707529f741f6e733d0e8a8bddced696c50c035a834266af57d3aa1ebc2b851352a0a3af125b932176161f76f2f6d6982bd86df3d44"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/examples/server/demoInMemoryOAuthProvider.js",
-      "bytes": 7419,
-      "sha512": "2bd393fa66ea5100938b5cbcd5d01515a14d24775a90765b0e3b04257af1267d612a0ffa8b36f924f411d24a916fa2dd59536db7d28b8429a8c02c790db663fa"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/examples/server/elicitationFormExample.js",
-      "bytes": 20408,
-      "sha512": "a944be5dedd8b208d24512d2adcc972ec5f737675b12c63ac51c03f048df237539a7307f09542e24550c1eb48e17241ac06e793bd756b21ee9420b7be99e1297"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/examples/server/elicitationUrlExample.js",
-      "bytes": 30120,
-      "sha512": "0248a090e4416796496604b329f668b2092f566e516415152dd6636b07d611961997c77358c9e8435cb11dedac1e83419d4d5fdc68ddce2731b66bdd013eab56"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/examples/server/honoWebStandardStreamableHttp.js",
-      "bytes": 2326,
-      "sha512": "f37876f0975d4b035fd5e553fa23a280bca42a4fc90c0314c04d29151a61dc4154f2d25f2b800b30338e517a8bc5592762c2729e552bbbe8df5dfa3adcc5a765"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/examples/server/jsonResponseStreamableHttp.js",
-      "bytes": 7082,
-      "sha512": "73759dd97909882b4b4044ed66c1a38b29b849ac7aea38527cfcccf4ac8fd79a36ceb884c799637756aa61100dc932f8eaf7bb0d16564947250521f4c9517f8b"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/examples/server/mcpServerOutputSchema.js",
-      "bytes": 2365,
-      "sha512": "b170e1fe765d3f0c904032d7f1a00aaf72e2650a4821707571bfdb4d1d314b488309f8a63398d73bcb7824f887a2eddae908e0b83c5fe3042398eb192f12ee92"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/examples/server/progressExample.js",
-      "bytes": 1685,
-      "sha512": "d8cad6d875f28d3054c6b9a9e7f071c11b1215166f78d21d0e4e2db2459b39a02efe5ed4ae0cd7b294ecbb985aa5f1d13f9270968ffb9984e50132e773102f92"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/examples/server/simpleSseServer.js",
-      "bytes": 5364,
-      "sha512": "5935f54955f758f36e73cb2f5e5d6f3d4f18eb73bf8cd3cc3932b13cc7ed92acbd91a5f35f3451b2215da7b67816be2514ecc9f85f9049a7a96fa76678e35f44"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/examples/server/simpleStatelessStreamableHttp.js",
-      "bytes": 4661,
-      "sha512": "ea62d23475df744a0b9b341d5f63e3008e19acec3109293a3298ccd812f7ef6b90660773a1fc712880d52b05a643066b4fde9603f15e148afd9e632fa31d7ce4"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/examples/server/simpleStreamableHttp.js",
-      "bytes": 31329,
-      "sha512": "0171834cdd791d9a56637ee3c1c3b20ce9d381c00b3e8be5a55d5b83c9338006cab0bddfcc2de6a110d876d1b2c753f2e1c12da98db93c57767629f7d7d580e9"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/examples/server/simpleTaskInteractive.js",
-      "bytes": 25239,
-      "sha512": "0030696c5ff31770a373d32bed8d1a07e02426b5dd574e02cf967b3e0d611bf024bf4b7cdfe3b48858aa90f68fc2d783f23cec8b1c96eb9026239e27faa2d7a7"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/examples/server/sseAndStreamableHttpCompatibleServer.js",
-      "bytes": 10761,
-      "sha512": "5cc04f47892543223502fccd42ec870e5e440605a4b9f14c0e8706380e4c245754cd2eef2b3e9a20f9ba6b8d868005e4e322199aef2e766f3d19ca8c59b7cd85"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/examples/server/ssePollingExample.js",
-      "bytes": 6378,
-      "sha512": "dfb3389b874365710f9c918f5df9d3263ce5fd9fa6db1b6db59334f5f1a38506eff93f742aae787be6f58efa2035833c82cf2bf22603a4d3fc5e74ba00247327"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/examples/server/standaloneSseWithGetStreamableHttp.js",
-      "bytes": 6952,
-      "sha512": "9f88821fcff0d0f45013f430ff66ab04284b89a787abefb93e89823b08170e6e08947788b88cda2b01dbcb205cbf162c0b3442eecf1b3fd20d5ac0da117730ba"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/examples/server/toolWithSampleServer.js",
-      "bytes": 1554,
-      "sha512": "bd41b8320be7a1d965c892548f93470efcfa059b541db767a35aa5b1d85e49e9fef3c8252afea23541fd0a6fa90304969f778b89f93d4296ae805f8f410fc3fb"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/examples/shared/inMemoryEventStore.js",
-      "bytes": 2258,
-      "sha512": "63a5ae87af7b7c75a31c5d791039eb935beabb668abe36107c53e2ed3b993e68eafa15479c5ed29286341f62a48ea9ba0c710fcbe1dd83c57a4f7c654a6c0e90"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/experimental/index.js",
-      "bytes": 367,
-      "sha512": "0559c52b26ba80ce6eb888c13a3da109d61540588a9c3c153e07fd34a84a1bb59e5b11b22785e1e621a67c40898d0520c04f686da2410b3496dd8819cc1e016e"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/experimental/tasks/client.js",
-      "bytes": 7647,
-      "sha512": "b6cfa65adf2d3de8a4009fdea1396476c48299046a9b468ff50980469d6cc505ddff9d18ede64282b43f436dc0e536e84b83e0916f5d6a852a20be7ddc631ccb"
+      "path": "node_modules/@modelcontextprotocol/sdk/LICENSE",
+      "bytes": 1071,
+      "sha512": "0c693ccdb644b8593283e488bd1f3a5b25d3060417012568060b3783bb15230451ac107a75bd309b6e27985a8d647e9acc799470557ddaa57c59b03005a50654"
     },
     {
       "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/experimental/tasks/helpers.js",
@@ -204,19 +39,9 @@
       "sha512": "89bcc65f76f48427e86ccd9c37ff5b66a1947bd6e3fb6408f888b632ab9956eabc99fa54ea83a486c53fba44de464f90879302dd6c28ac9bd7fb11c675012722"
     },
     {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/experimental/tasks/index.js",
-      "bytes": 610,
-      "sha512": "545d9eed00c9f9ade4fa3ebecf9d8e3629f0a962f374d445a9cac8a40a6ed7a99fa7c4a9ac9ca7fdfb15820f72b4f75615808182ff70fd7b31d9cb965d4a89f2"
-    },
-    {
       "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/experimental/tasks/interfaces.js",
       "bytes": 568,
       "sha512": "d3e2c128f2af4cb2259996c1ad67fe7a60474636095ed1f05ba466be13776a679d4ca9df59cee250305acad727cc5378500bafc6a87259bce9b7d95fef90b3f7"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/experimental/tasks/mcp-server.js",
-      "bytes": 1241,
-      "sha512": "d05e1fb0aea233abf2cf90c8e8befe3587066df61a782daae284468673e3753380dd734062b10f0f05a37b249f09dd6222645a6a556708f3cc05dc5710f21d1e"
     },
     {
       "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/experimental/tasks/server.js",
@@ -224,144 +49,14 @@
       "sha512": "70bc9f04bb53e135e05b46e6c40284ae3495f4081b2b134e58ba21c6d904bf7aa62e9e9c29c62fe7c132bb46f827441727535faa6864f265f3365ecd2a0d25a9"
     },
     {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/experimental/tasks/stores/in-memory.js",
-      "bytes": 10236,
-      "sha512": "5421ddded7298198cdfd57fc85e66dfcf1d8cdc0bf06903aba01e5c2434670d885ffdb62b888e06f2fdf10d8190f0fc1df414e69b033abb1f93c803101ca3898"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/experimental/tasks/types.js",
-      "bytes": 769,
-      "sha512": "f5dc446fd59c4d3a54afe8643cb397f6fbe363a20e41f4d42d82d8804437bb28faec89de5250c4baf76ec7d230dc5ae8b8d6131e9aa4ffabe12431faa364e9e9"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/inMemory.js",
-      "bytes": 1717,
-      "sha512": "64057b160875fc066b886f20633ba4b0aceb201b44e25beea3d6336955eac6395121630c324fb1d902c7933d8b7a01de2e853f05a4f543c500cfaa51063e6184"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/server/auth/clients.js",
-      "bytes": 46,
-      "sha512": "603823ff7440698f38b0b6ce4a0adb2b91a2b863259b7b663d5d618b8f209ac34c0fb84a8197fa2ac2afbcc32423ea0e13944e61884f478d1c4f2bb18cd40a46"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/server/auth/errors.js",
-      "bytes": 6442,
-      "sha512": "65154accd4070e13f1b6002329ec0af6341198be12cb7d4944d3e3a64e3eacea59ae666a89e4d64959d26091169d3bd0d8776ae81b404224a8dccd91d46496dd"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/server/auth/handlers/authorize.js",
-      "bytes": 7532,
-      "sha512": "9cba5827e4ba657c6743388c3b618e560af96dd8e00c24bd86ff71bc213a7285d6a4ee36ea0bef4e2e76fcd644c59b8ecffdd39cf9637a82107b6bdc0ff3b6a8"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/server/auth/handlers/metadata.js",
-      "bytes": 584,
-      "sha512": "f19135fed78b37e5905e291666d2f8c6b36a1b3925a2c8563cc06d240150720ec0165fbfd064a77d207f3bc02da09bc90e212171e150e69741e58e79788bdac7"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/server/auth/handlers/register.js",
-      "bytes": 3585,
-      "sha512": "b515ef5f0847792c2e78a523d81715a9f6f59213a69da8860104c78219de94de77ddb0f4d606abe900cb656b24c749a1ec3dac92926fb51eb045010e8bdd7ff9"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/server/auth/handlers/revoke.js",
-      "bytes": 2631,
-      "sha512": "388b2440d28a6aff6dc3d71c06403af017e7bc5f175b751df324c18c335fa5d152e52ebed00b4f6da5105581bb840dc8c26e0ac72e814b137a93ebbe3bd7e045"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/server/auth/handlers/token.js",
-      "bytes": 5290,
-      "sha512": "8b617b05b2e57d8b4e532cfbb1b90d49985c47e58d7e691689f2540e326cafb3d6afa732e795d5adc1db987d53ac84a67387650c5ed75b00978d304044dfc279"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/server/auth/middleware/allowedMethods.js",
-      "bytes": 777,
-      "sha512": "2facd0460f1edae857d2a2a59a09fe6fb39ca121bfd6f17f54936a7c5e8b193e32225cf16f09b33343124a10be81a75e3896773e3d07e56631265146196b1b2b"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/server/auth/middleware/bearerAuth.js",
-      "bytes": 4282,
-      "sha512": "78c14d1a004a37e1a22b9a591ce2dda4daf878e01a0304fa672ae5e7825b47a0a9ec0aad438f72e237bdbdd6a65872117b09e72597b030d9b33775cdedffb66f"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/server/auth/middleware/clientAuth.js",
-      "bytes": 1884,
-      "sha512": "5cbc3207e9265cac4ca61d28451743f4b1eb42a0ac02f797c7d5a6e205c218168e257cd363ac9b2d02d487d0408323e6e0d109b44e01541b312799d8851984b2"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/server/auth/provider.js",
-      "bytes": 47,
-      "sha512": "a0cc036095a83f6cb045929979eceea967a6f21c0657861ca90a1a4e2dddd160df0e81397c0468ca8f0456485daf5c5e4193dcc26223c4a2ba5133a40b392443"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/server/auth/providers/proxyProvider.js",
-      "bytes": 6514,
-      "sha512": "b6ee4b0612aada365a3a006181d9eccc3412df89ad9042b6ce20c861bc51d444763d1aa38b9c9a1ab463834b3cfc286567f4172f59966d7d1bd9adaf34d70367"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/server/auth/router.js",
-      "bytes": 6408,
-      "sha512": "37956a6331cc823570b4d4bb50989af6b6ad9d88f26876a236b16563f060e685161a3b78948d683ded473482d4cbbf73a221f39fb62b434f64eb3ce0c9e9aaab"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/server/auth/types.js",
-      "bytes": 44,
-      "sha512": "4ac6c4048369e25574a3915fad7588ad17ae81c18ac07af75a62c09d417ad00b5cae5bfe0cbbeddb97fc70492f3e0d52c24ba8129fafa6458948d29c3edbc551"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/server/completable.js",
-      "bytes": 1346,
-      "sha512": "8e57d13956d7dc088bc2039c2096d8dbf8dd0f028db57db82c11ee1cab31856b03159645968861a9c9757508779af2f97a0f08ca124064fb62537d6a34a2ad99"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/server/express.js",
-      "bytes": 2341,
-      "sha512": "238000a2d9fe88cf72ed8b44667efaf6bd8b5b4db3ffb1c6ba165df88dcac9eba12e2e1155b8fceb2eb81f5678130d64f2ea6be9b91949bc30a631ebc7ede9ae"
-    },
-    {
       "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/server/index.js",
       "bytes": 20763,
       "sha512": "885c113a31bf22073fc8570dd8cbf18c1b0d4ae0cd0aad090b03127df69d425c903a9e75ae37909d3010a1b4a8a5c3a70c54335dd64e9f58802576af4ac95b98"
     },
     {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/server/mcp.js",
-      "bytes": 43035,
-      "sha512": "01bcacac4753bfa307bb8150570f7f06e1ee490ff1a2c0e61de5977f71d646dd3e2ffa130b42f0f9ff37ab6450085233182f7a6f02cecbd062d1bdeef09ea279"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/server/middleware/hostHeaderValidation.js",
-      "bytes": 2435,
-      "sha512": "0441c99b6afff872bda07fa45bb404819771110270d50be0ea0de3019c0771c03b46694c566255d2d3343b54ae59ea0d52faf245a6a4a4f7d06c977a21e96a9e"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/server/requestBody.js",
-      "bytes": 2303,
-      "sha512": "b230e91c2b41accb0ff46a51a3b9f295760413296b5da1928aefc1a8ebe636887ad322b938952088ac0e5d687f5f634d2bba3074d3e29b6d2188c083608de2d3"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/server/sse.js",
-      "bytes": 6488,
-      "sha512": "cd86bc9f75f881cb3438ddc95961f111be03b6e8c8108caf657009f0d7f87f6b70c7f986b093541c3068839ed42ee550cc154649cc2252a85948434f3bd4a73b"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/server/sseKeepAlive.js",
-      "bytes": 530,
-      "sha512": "52bfab1db6430c3d8fe86cb95c6ba2aca4d3a010a212352af35616fc3720adc74e5d596597821956092a75f0ebc55adaf7681bf56dd9700b909f9172bc36f25d"
-    },
-    {
       "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/server/stdio.js",
       "bytes": 2825,
       "sha512": "ec7c4942224072e531203fdcb52d65f2b0de6ad7316fd8ac493fc938e90e27a8704275909a964a3fab4ce5acc0f7caa942400c449b646efb177a7358584105eb"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/server/streamableHttp.js",
-      "bytes": 6534,
-      "sha512": "168544e945a25802877a1e5876ce5318ce23d964dc410c6f09fd98e18688f23a326c5688d7b67f5a1590a4af10e04a01d95a9f2c9983fe876730832d1cfd14a5"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/server/webStandardStreamableHttp.js",
-      "bytes": 46208,
-      "sha512": "d1c9f3ed4a61a6052009283c1ffd6a8a13d331c3176fdf484fd89b7902e05b317a0a3b38c78ec9e886817a2cbc8fbd6c115b49337de821f1b409bed4765db576"
     },
     {
       "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/server/zod-compat.js",
@@ -374,59 +69,14 @@
       "sha512": "76560d91912f130a0121ac1e369953511540ac07369f311d7135820b0d68e19466ab874e47077cb54f61e18befd11f8ad00e2fa2fc46a678673e6d58e8785e83"
     },
     {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/shared/auth-utils.js",
-      "bytes": 2271,
-      "sha512": "e62b37edaa354bdca961aea892d7b1584240a5384862aaee08cddb51bb0f95535c822a1a5fa3937dd78350a092afc4efd11d52861ce81c8fd457a441933f02ad"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/shared/auth.js",
-      "bytes": 8736,
-      "sha512": "5b17f94c8deec91aa26ac02da97225338c016606da31081b779f93d3fd8b4d59007beb7f894bb6ac11c90d977aaf347a64dd8fee71a8e2c5982b4a3aab4305a5"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/shared/mediaType.js",
-      "bytes": 2514,
-      "sha512": "84be6fbcb5800c9256ec06ca81b57881e40e2560e3776e1d4583779f36c464a7b1b986c0e7f7c55df73d51905a64d09a4ec011b891315eba49958e33f9e1d096"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/shared/metadataUtils.js",
-      "bytes": 843,
-      "sha512": "c146a9ba8a41fa2f95cdcd60fb9cef04f21baf9b4eb0c6810acbe3119209b575bc7878ebe5c2ca602e922c7385dde462b584642b4947667641ac42a8eba7ffd5"
-    },
-    {
       "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/shared/protocol.js",
       "bytes": 53923,
       "sha512": "9098f9c234152188dc62a74b2b50b19d231cc5a75f554e3d4f37c09b5f76e9bb216a1491723bdf499b2fedf1711bc769513213fe8ef0bed8519a6ca5b147c312"
     },
     {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/shared/responseMessage.js",
-      "bytes": 455,
-      "sha512": "ec7d7ecc25570e9c83012d7e2dfc98f0642dd3ae5d7e67640c404f1cb087d3e9c223ccc257661bd83f79f521d3263d4b8d366896122ef927bf3d5ca91ce3e2ef"
-    },
-    {
       "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/shared/stdio.js",
       "bytes": 1357,
       "sha512": "76bd84836c694fd091a0e9b57f85936e6a726c17faf8fdb36da30426ebdce5f5188d7f1b94ebbb7924746986b5ffa3b22fefe47969c3e14e822069c7d1f5c3c9"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/shared/toolNameValidation.js",
-      "bytes": 3790,
-      "sha512": "674554a355864ce729c155ef1751dd7e6267a2b91ba9d762b0462bcec793ff7e92f79c6a9940664fae369a0fd39e170e4e8c05cc0327e09eb26d03884d1c0e49"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/shared/transport.js",
-      "bytes": 5247,
-      "sha512": "4e3ef28f912580ee8d0973b24a15b827248b7a37d9bcb91f10a8b3d421e6a7c54254b7e602ca97fc29ebeb437c36366ff6b19f328d066e2783895abc802f5e55"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/shared/uriTemplate.js",
-      "bytes": 8724,
-      "sha512": "f440f92696e3d360a39963c69801a750f97e771622ea834362b731b5a379c3e5a3f9b030d7f4ad1aaa3eb6d61bfd7b31777b0ecee74b4baf565a902397ecaafc"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/spec.types.js",
-      "bytes": 1042,
-      "sha512": "28fc1e8658e2ea345b65d59eb65edd402dbfdc1bd116d31b84f7a1688391f3de8765cb751b78d162fbcbe6935772b496226376d5bac396e0c34321e8ecfaeacd"
     },
     {
       "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/types.js",
@@ -439,39 +89,24 @@
       "sha512": "ff9febafa898ac52fa7d155ad92740ff52715159158e521a3cb4b37b7a4339ab866657c592b0121dbd60f458469ae056680d58443ca22c39543d32bde99d4d2f"
     },
     {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/validation/cfworker-provider.js",
-      "bytes": 2169,
-      "sha512": "8ea4ae5cc0e4102a54d67394f8ccfe76d0f34084b91f6fb1d17d4d131b64059219b889520a4c9e0ce419a57a337e99f1f3c7a7729558fac6f78a8e302d51066f"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/validation/index.js",
-      "bytes": 981,
-      "sha512": "beef3c8c3a52b2a59c60813222dd1b7be592cfb2faea96bf198b458515d04a2fca602a73452f10c454240c419613db853e289f6a71e0835a904369f9cd87d603"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/dist/esm/validation/types.js",
-      "bytes": 44,
-      "sha512": "4ac6c4048369e25574a3915fad7588ad17ae81c18ac07af75a62c09d417ad00b5cae5bfe0cbbeddb97fc70492f3e0d52c24ba8129fafa6458948d29c3edbc551"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/LICENSE",
-      "bytes": 1071,
-      "sha512": "0c693ccdb644b8593283e488bd1f3a5b25d3060417012568060b3783bb15230451ac107a75bd309b6e27985a8d647e9acc799470557ddaa57c59b03005a50654"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/node_modules/ajv/LICENSE",
-      "bytes": 1090,
-      "sha512": "ad750e585e121344bb036cf6fb4c6f7688172f1731cbcb61aa3200f4be1a30b89206aae37c6abb6367529160f0fd1b1391c4d8dfaf3724bd76e210d416bcbe1a"
-    },
-    {
-      "path": "node_modules/@modelcontextprotocol/sdk/node_modules/json-schema-traverse/LICENSE",
-      "bytes": 1074,
-      "sha512": "b2f5d8143f44ed9cf6c062caa0a83569caf4b51e071c30a08d2facd41e15dd5111ba76a908484fa5d638a1ca6afa53d0219d8ec59bde1a7a78ae759810d739dd"
-    },
-    {
       "path": "node_modules/@modelcontextprotocol/sdk/package.json",
       "bytes": 6511,
       "sha512": "47469e79bcaad700ae27f80f9022e50b6ab1f71f5b65f0963c5d766beb66a1af8f008108d580012f6616c99b10568bae4181d1d901c643ba3afb82ed98d91cf3"
+    },
+    {
+      "path": "node_modules/zod-to-json-schema/LICENSE",
+      "bytes": 745,
+      "sha512": "c22e0a3e7f062cd415a5921b868e823465d72fe415802668ec0cf2f755801749616d76fc36da85862bad75811912e34a72997cee884ceb04b3c09155ca2d30de"
+    },
+    {
+      "path": "node_modules/zod-to-json-schema/dist/cjs/Options.js",
+      "bytes": 1552,
+      "sha512": "94b87b25db152c6be9c8d662ed2acfd793d4a0e110135d95927714a8008ebcc51ee1469797348ff30a271db4a9f5b38c4caffe46601ecb6a451fb057775c829d"
+    },
+    {
+      "path": "node_modules/zod-to-json-schema/dist/cjs/Refs.js",
+      "bytes": 1017,
+      "sha512": "20590f5ecc8d377da7a9ab6c9cb8da031994841b15bba75f21e5639cb9c7958ffb510b338e6df8eac8845327c6deff66b65b9359280c23c2eb4f7ac92e0068e9"
     },
     {
       "path": "node_modules/zod-to-json-schema/dist/cjs/errorMessages.js",
@@ -489,14 +124,14 @@
       "sha512": "421e18b0fd2002edcde42a03fdd5e17250248b35c5138eb6396c42c75d0df91b781032d396f5294583a977faca90509432cae7719fcbffa1acb241404305a620"
     },
     {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/Options.js",
-      "bytes": 1552,
-      "sha512": "94b87b25db152c6be9c8d662ed2acfd793d4a0e110135d95927714a8008ebcc51ee1469797348ff30a271db4a9f5b38c4caffe46601ecb6a451fb057775c829d"
-    },
-    {
       "path": "node_modules/zod-to-json-schema/dist/cjs/parseDef.js",
       "bytes": 2645,
       "sha512": "3fdfb8ccd41b4a21283c4189c4987d2bc953edcd9ffb4c33fc484f88902696ec8aca1b03d8b0842193a19513e94a523090b4027017aeda286e7776afce2eae90"
+    },
+    {
+      "path": "node_modules/zod-to-json-schema/dist/cjs/parseTypes.js",
+      "bytes": 77,
+      "sha512": "7f65c6403a23d93fb148e8259b012d6552ab3bff178f4a7d6a9d9cec0f60429fc1899e39b4bca8cc08afc75d9a7c7bfdb13fc372ca63c85eb22b0355eb4d6000"
     },
     {
       "path": "node_modules/zod-to-json-schema/dist/cjs/parsers/any.js",
@@ -649,16 +284,6 @@
       "sha512": "61941e2a0c966c2a5751bc1795cf3b74291b0bb34b718f822ddaee5d63baca7c9499ce43832c76715124e0362095f1e286f9b547c045f8aa703595e4eb253d7b"
     },
     {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/parseTypes.js",
-      "bytes": 77,
-      "sha512": "7f65c6403a23d93fb148e8259b012d6552ab3bff178f4a7d6a9d9cec0f60429fc1899e39b4bca8cc08afc75d9a7c7bfdb13fc372ca63c85eb22b0355eb4d6000"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/Refs.js",
-      "bytes": 1017,
-      "sha512": "20590f5ecc8d377da7a9ab6c9cb8da031994841b15bba75f21e5639cb9c7958ffb510b338e6df8eac8845327c6deff66b65b9359280c23c2eb4f7ac92e0068e9"
-    },
-    {
       "path": "node_modules/zod-to-json-schema/dist/cjs/selectParser.js",
       "bytes": 5685,
       "sha512": "5be7bfbd3614c273c2a040c5918d4efa8f558cb8191d8320f900411637ed404507df26e28e55ce3c6476456063a08fbd01f26d9dbca54e922566ce9981716ee9"
@@ -667,6 +292,16 @@
       "path": "node_modules/zod-to-json-schema/dist/cjs/zodToJsonSchema.js",
       "bytes": 3402,
       "sha512": "aac1ffe08a392d5ddbd03d8ffbe7ed43b8a06915b50988c34aed316ae980fea2f388312e27473d8b472bfd2fa0e144e31ca05d3ee1f2b9772a1c450c5249e417"
+    },
+    {
+      "path": "node_modules/zod-to-json-schema/dist/esm/Options.js",
+      "bytes": 1281,
+      "sha512": "9868ddf8fcb21b4678ee2dcacf5d59624c8ba7fa9c1f59a4515484b115a51aeb7f6b80c5f2759b392caac8b05ef6e71992e266b5e6877f7bacb59543920da0bb"
+    },
+    {
+      "path": "node_modules/zod-to-json-schema/dist/esm/Refs.js",
+      "bytes": 880,
+      "sha512": "a63889423958db40144169b6f20cbfe20b4c161e7dafbc29523fb6be8d5f718c11c2fee3dda79ae3b6d2ac5b56e84102d172bac79f44e16b9b9620909e3771e5"
     },
     {
       "path": "node_modules/zod-to-json-schema/dist/esm/errorMessages.js",
@@ -684,14 +319,14 @@
       "sha512": "44ce14587964b6818859aa35f70f0c2ed3c65b17b143dec99e813500777727c956339d092978bde7d12b375367e9615c2213771e52e5589e95269a16927e77a5"
     },
     {
-      "path": "node_modules/zod-to-json-schema/dist/esm/Options.js",
-      "bytes": 1281,
-      "sha512": "9868ddf8fcb21b4678ee2dcacf5d59624c8ba7fa9c1f59a4515484b115a51aeb7f6b80c5f2759b392caac8b05ef6e71992e266b5e6877f7bacb59543920da0bb"
-    },
-    {
       "path": "node_modules/zod-to-json-schema/dist/esm/parseDef.js",
       "bytes": 2420,
       "sha512": "ddcf3c2536acc858df19ffd47be01fa74e3e82f2602abe4552c1fe666c91cc642d1498a985af6cb3969c7979fe6abfa1e735fd9b027a41a3edd8d6fa6847f268"
+    },
+    {
+      "path": "node_modules/zod-to-json-schema/dist/esm/parseTypes.js",
+      "bytes": 11,
+      "sha512": "4ee1c88f8c3f4e4cd34cb6c00339bf9d6d036ff4ade3af49e871cc8966b84c729d8b75492acc6413c9a664ac00a57958223ac13c4229da8c62ebe6a53e4f783f"
     },
     {
       "path": "node_modules/zod-to-json-schema/dist/esm/parsers/any.js",
@@ -844,16 +479,6 @@
       "sha512": "a843e5c403f2acb371c8449ab37e31dd405df073c2b5c7fbe9a4ae5bc7a39301b7ccc79df505dd0d74ad70a915910ba91eed6713a54c4d77d956ce28e37d498c"
     },
     {
-      "path": "node_modules/zod-to-json-schema/dist/esm/parseTypes.js",
-      "bytes": 11,
-      "sha512": "4ee1c88f8c3f4e4cd34cb6c00339bf9d6d036ff4ade3af49e871cc8966b84c729d8b75492acc6413c9a664ac00a57958223ac13c4229da8c62ebe6a53e4f783f"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/esm/Refs.js",
-      "bytes": 880,
-      "sha512": "a63889423958db40144169b6f20cbfe20b4c161e7dafbc29523fb6be8d5f718c11c2fee3dda79ae3b6d2ac5b56e84102d172bac79f44e16b9b9620909e3771e5"
-    },
-    {
       "path": "node_modules/zod-to-json-schema/dist/esm/selectParser.js",
       "bytes": 4925,
       "sha512": "6993d495028cb59bec6f55124d75febc9a6ef8717dc0d21e7fbcc357d599eead5664c0c7f777e501d2f004ab603cda90946464598cd96af3a71f5f44a17b6c20"
@@ -864,14 +489,14 @@
       "sha512": "03e06e060eb2bd06c9be5cf805ee8978c5d71b2304bcc5fb8653116a13b3ddfd96561ba37c58d5bb580ce71b88401e0a4fb47f68f374698a4c8db390cbf3a5fa"
     },
     {
-      "path": "node_modules/zod-to-json-schema/LICENSE",
-      "bytes": 745,
-      "sha512": "c22e0a3e7f062cd415a5921b868e823465d72fe415802668ec0cf2f755801749616d76fc36da85862bad75811912e34a72997cee884ceb04b3c09155ca2d30de"
-    },
-    {
       "path": "node_modules/zod-to-json-schema/package.json",
       "bytes": 2968,
       "sha512": "d85271ab1c510f97a205e4a737f5fdfb85e069734b568d0ddc164235dee8a381d13ebb2a5d238fb6f65f7fec05013b6b1b1cd545997b93fc799cc4892b2b8ccf"
+    },
+    {
+      "path": "node_modules/zod/LICENSE",
+      "bytes": 1072,
+      "sha512": "1b5c94caa9658b0a3af559622556bc73737115cd9cf18fac4c2fa48b66aae38ad84dd4a5dde2af72580a82f6c336d846951401557d80b515b1c858562d5d7ca0"
     },
     {
       "path": "node_modules/zod/compile.js",
@@ -882,11 +507,6 @@
       "path": "node_modules/zod/index.js",
       "bytes": 422,
       "sha512": "67a893e336e3d6bc10d17afd2b59e7b4df862bbec38e82bd11f36367afadc402537331b24c98066a796039628d1d89fdf62a29147cc504acca42601304802c5b"
-    },
-    {
-      "path": "node_modules/zod/LICENSE",
-      "bytes": 1072,
-      "sha512": "1b5c94caa9658b0a3af559622556bc73737115cd9cf18fac4c2fa48b66aae38ad84dd4a5dde2af72580a82f6c336d846951401557d80b515b1c858562d5d7ca0"
     },
     {
       "path": "node_modules/zod/locales/index.js",
@@ -902,6 +522,11 @@
       "path": "node_modules/zod/package.json",
       "bytes": 4142,
       "sha512": "9dfa32f4e1bd6faa69e2fd2f071ff7f11c415b591d60169fbb955cb42906f4e0681c77103e997d80a2e192d19e509c6dd82d69e74acb03cd415be2e34bcd9c72"
+    },
+    {
+      "path": "node_modules/zod/v3/ZodError.js",
+      "bytes": 5061,
+      "sha512": "f8540813dbb8ad0ee226f7a4e4ad85fea55ff715a32c7cdc2dd9b37e199dedf843064622322754c8959753d5875c81832b86a50a12ba61ccf29d3a8af58a1042"
     },
     {
       "path": "node_modules/zod/v3/errors.js",
@@ -962,11 +587,6 @@
       "path": "node_modules/zod/v3/types.js",
       "bytes": 131408,
       "sha512": "a37a06c48221992beba60ba64a6db2e8d0216f1662801a6a62205423a4ba777a800280b0987826912fda98ff391df22f6b3f62ef4149f0277ff0e886ced5babf"
-    },
-    {
-      "path": "node_modules/zod/v3/ZodError.js",
-      "bytes": 5061,
-      "sha512": "f8540813dbb8ad0ee226f7a4e4ad85fea55ff715a32c7cdc2dd9b37e199dedf843064622322754c8959753d5875c81832b86a50a12ba61ccf29d3a8af58a1042"
     },
     {
       "path": "node_modules/zod/v4-mini/index.js",
@@ -1504,11 +1124,6 @@
       "sha512": "7072a574d612ace8a4b2086e7a3af61f950605f760c8689f606860a1209ff6e7af340c25a8668f1f03ad40677f95bb0d8f74669e8cf5715f1c787360b8095d27"
     },
     {
-      "path": "README.md",
-      "bytes": 6905,
-      "sha512": "b9ff7184a363e2316cf74595c7ccb6e7e13ec6399257ce9e60f2286df91dbb65f8d7ecf627f1074f11f89e5b179d3dec43a969e6257e47b18d71a9d2881d5470"
-    },
-    {
       "path": "server/walletwall-mcp.mjs",
       "bytes": 121531,
       "sha512": "d8e0d7163a5353d5c1a8e8a78d550980223999c83caab6efb1c808ededac8dad437f1935b8adbf422713b7cba9e6d398907ef5b3f458b8788881bf0223feb6e3"
@@ -1530,8 +1145,8 @@
     },
     {
       "path": "skills/walletwall-evidence/SKILL.md",
-      "bytes": 6142,
-      "sha512": "527a38d1dcae1bac3e160afd93f315db5e87bca7cc736d68773cfaa99170e7f142929efadc983b551d51b3fb134a9ebd835e5ca1cd7c256725dc951c95d9aefe"
+      "bytes": 6596,
+      "sha512": "caa1e4ebdae9904e361d5e2f4ed69dccc21819a9cf5d8ed059d7716fa4c5f22c8773dfb755deb3eeaa6b4ae77ccc9fa381af51c55684ce4b5a96b63a625af1a0"
     }
   ]
 }
