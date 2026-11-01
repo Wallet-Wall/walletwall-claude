@@ -28,7 +28,7 @@ Distribution-only repository governance may live under `.github/`, including:
 - security reporting guidance
 - contribution and pull-request templates
 
-Do not hand-edit generated payload files such as `server/`, `skills/`, `node_modules/`, `README.md`, `.mcp.json`, `.claude-plugin/`, `LICENSE`, or `PROVENANCE.json` to change behavior. Those edits would create a semantic fork and will be overwritten by the next deterministic sync.
+Do not hand-edit generated payload files such as `server/`, `skills/`, `node_modules/`, `README.md`, `.mcp.json`, `.claude-plugin/`, `.gitattributes`, `LICENSE`, or `PROVENANCE.json` to change behavior. Those edits would create a semantic fork and will be overwritten by the next deterministic sync.
 
 ## Required release chain
 
