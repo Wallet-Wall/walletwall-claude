@@ -1,12 +1,12 @@
 {
   "schemaVersion": "1",
   "sourceRepository": "Wallet-Wall/walletwall-copilot",
-  "sourceCommit": "db079910003270f50863e1b325b8ef451c1eea30",
+  "sourceCommit": "b5073d3c584f491936623ad114b2cda50403aa77",
   "files": [
     {
       "path": ".claude-plugin/plugin.json",
       "bytes": 293,
-      "sha512": "3acd7388cde07b5881fbb42c4780e8115aa8234d294dc5bfd4f6e94f4be2235201889c644076b889a3408086793da26b15b82ce8264dd077acfe5d522080cbee"
+      "sha512": "da38b9a68a9865e76fe3accce05c3f2d03ec87454d0d850fb47dec7b4e0add83d0730a0f911df308caff2e682d76087abd0e8fe08f8c9b69671086396d8ea495"
     },
     {
       "path": ".gitattributes",
@@ -25,8 +25,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 8679,
-      "sha512": "8b3e61ba8d3d91cd5ec9cca40b45252e008ad7266034d9b14b85650df31bc413d832dc7214a3204244b674db689b590090cd3a3b62618b1dc3c6e7c0a8caba60"
+      "bytes": 9252,
+      "sha512": "eb2094569f276886548980b7eb26616710ffcce0cb8169af59baf0408b710d56a991e0ea12e52fc45adc29e219ebc4a11103e33d0cb35a882b391238373a592b"
     },
     {
       "path": "node_modules/@modelcontextprotocol/sdk/LICENSE",
@@ -1125,8 +1125,8 @@
     },
     {
       "path": "server/walletwall-mcp.mjs",
-      "bytes": 121531,
-      "sha512": "d8e0d7163a5353d5c1a8e8a78d550980223999c83caab6efb1c808ededac8dad437f1935b8adbf422713b7cba9e6d398907ef5b3f458b8788881bf0223feb6e3"
+      "bytes": 150647,
+      "sha512": "1f251d707ac51a0c8f30de69dc2519e8720b714b3f92651f49eb25d3415fb10874f02ca468cecf651d7036ddbbd564b530df17a29f6879667c9cdb96ea41fa9b"
     },
     {
       "path": "skills/vault-readiness/SKILL.md",
@@ -1145,8 +1145,8 @@
     },
     {
       "path": "skills/walletwall-evidence/SKILL.md",
-      "bytes": 6596,
-      "sha512": "caa1e4ebdae9904e361d5e2f4ed69dccc21819a9cf5d8ed059d7716fa4c5f22c8773dfb755deb3eeaa6b4ae77ccc9fa381af51c55684ce4b5a96b63a625af1a0"
+      "bytes": 7231,
+      "sha512": "c4226d127c15716e6fa84af67ac18b8ce7764b806e0a14bcd8f731189f4350c60a834b6555d3e5ae33e753ed55dc7e9adfabd0f676ef11ac5a5c6c3150fc6ec9"
     }
   ]
 }
