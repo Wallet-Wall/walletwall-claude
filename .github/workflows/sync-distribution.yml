@@ -70,19 +70,18 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          # Anchored, so only the top-level .git/ and .github/ are kept; CI's origin check uses the same boundary.
-          rsync -a --delete \
-            --exclude='/.git/' \
-            --exclude='/.github/' \
-            source/dist/claude-directory/ distribution/
+          # The generator owns plugin/ and nothing else; .github/ (this workflow, CI, the pin) is never touched. Both
+          # paths are local to this runner.
+          mkdir -p distribution/plugin
+          rsync -a --delete source/dist/claude-directory/ distribution/plugin/
 
       - name: Verify generated provenance pin
         shell: bash
         run: |
           set -euo pipefail
           expected='${{ steps.pin.outputs.sha }}'
-          actual=$(node -p "require('./distribution/PROVENANCE.json').sourceCommit")
-          repo=$(node -p "require('./distribution/PROVENANCE.json').sourceRepository")
+          actual=$(node -p "require('./distribution/plugin/PROVENANCE.json').sourceCommit")
+          repo=$(node -p "require('./distribution/plugin/PROVENANCE.json').sourceRepository")
           [[ "$actual" == "$expected" ]]
           [[ "$repo" == "Wallet-Wall/walletwall-copilot" ]]
 
@@ -93,7 +92,7 @@ jobs:
           PUBLISH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          git add -A -- . ':!.github'
+          git add -A -- plugin
           if git diff --cached --quiet; then
             echo 'Generated distribution already matches the pinned source.'
             exit 0
