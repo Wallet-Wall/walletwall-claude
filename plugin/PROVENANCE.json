@@ -1,12 +1,12 @@
 {
   "schemaVersion": "1",
   "sourceRepository": "Wallet-Wall/walletwall-copilot",
-  "sourceCommit": "3e55b40cb6d5851bd9323ba83b6cd3e6329fcf78",
+  "sourceCommit": "0e372193e2e595815535ef28ab39482591c767f6",
   "files": [
     {
       "path": ".claude-plugin/plugin.json",
       "bytes": 1029,
-      "sha512": "274c682fc5982a06e032adf3f265efa453cfc5fba01793c81f64a1fb2009d326efbf3372e2c58b707115b7a7ba126dc0f7b2ee5cb599a555836581c7630f8adc"
+      "sha512": "4f4ad55035e3c95f670bf1078701afb012cc8b1a5643dedf977aac43dd511739ad61c0c17c4bc17b6db7a5dbdde7934d3311926591f67cd40879e73359068e9c"
     },
     {
       "path": ".gitattributes",
@@ -25,8 +25,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 14522,
-      "sha512": "ed5b4ab3383135314e9cff4ded987bfa88237622b80d8232087893d2e2b2eb182cfba209062a7e5acb0ca681b814a71d4456873cdebf0464f7eba546fbba864f"
+      "bytes": 15237,
+      "sha512": "288ee199eb52d781d0894b82735176ea9d0db717536afb87189c2557dab65a5eb0585d31b3698d80f964ebd2e63bdca68f4858f57df8c9e8650f1bd416b49cfa"
     },
     {
       "path": "assets/icon.png",
@@ -102,201 +102,6 @@
       "path": "node_modules/zod-to-json-schema/LICENSE",
       "bytes": 745,
       "sha512": "c22e0a3e7f062cd415a5921b868e823465d72fe415802668ec0cf2f755801749616d76fc36da85862bad75811912e34a72997cee884ceb04b3c09155ca2d30de"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/Options.js",
-      "bytes": 1552,
-      "sha512": "94b87b25db152c6be9c8d662ed2acfd793d4a0e110135d95927714a8008ebcc51ee1469797348ff30a271db4a9f5b38c4caffe46601ecb6a451fb057775c829d"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/Refs.js",
-      "bytes": 1017,
-      "sha512": "20590f5ecc8d377da7a9ab6c9cb8da031994841b15bba75f21e5639cb9c7958ffb510b338e6df8eac8845327c6deff66b65b9359280c23c2eb4f7ac92e0068e9"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/errorMessages.js",
-      "bytes": 643,
-      "sha512": "3188e5b3e4e7073798b4d365bce7f9927db6693f1a4f2bc9f604a854bb2be4f695d187cc87121ffc3713745aa914ad8f94f933c2f933adb8a237839509d9b6dc"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/getRelativePath.js",
-      "bytes": 405,
-      "sha512": "256a353d4b4b29f6bf3ed464954aa83a00c24599fa676d71bd2f528419b371012e7246ff9ae749eff20a799b7778557ec7949289efd8cfbf8e4e8b038e2e40b0"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/index.js",
-      "bytes": 2945,
-      "sha512": "421e18b0fd2002edcde42a03fdd5e17250248b35c5138eb6396c42c75d0df91b781032d396f5294583a977faca90509432cae7719fcbffa1acb241404305a620"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/parseDef.js",
-      "bytes": 2645,
-      "sha512": "3fdfb8ccd41b4a21283c4189c4987d2bc953edcd9ffb4c33fc484f88902696ec8aca1b03d8b0842193a19513e94a523090b4027017aeda286e7776afce2eae90"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/parseTypes.js",
-      "bytes": 77,
-      "sha512": "7f65c6403a23d93fb148e8259b012d6552ab3bff178f4a7d6a9d9cec0f60429fc1899e39b4bca8cc08afc75d9a7c7bfdb13fc372ca63c85eb22b0355eb4d6000"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/parsers/any.js",
-      "bytes": 676,
-      "sha512": "4fa0629cdb7e6b7a72ace0eb7671ca26204a82dcf95d52e7bf3f4e73ba112754442ff82a4c6d88596b645175bdb56ac31f555a878061ef3faf59276d22b16af5"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/parsers/array.js",
-      "bytes": 1258,
-      "sha512": "dc3159cc2c8be9f30d7ac2f60f160d87cbd1d0195882436815bbba9c63d43b46096c8b13db42c91733a6645ca407188d0a36e676eaea883336c3b7180abcaf1b"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/parsers/bigint.js",
-      "bytes": 2183,
-      "sha512": "7bffa79eaf7c2f808f53418c6b08a98e2ebd773ddc37bd52d1289912f2fd25d0972429f68fcb30dea7e6a99835f0d801a933b016a817f1e249f8225fd0ae669d"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/parsers/boolean.js",
-      "bytes": 230,
-      "sha512": "3f3747a99995546c8b6a28b68724c38f0cf1651f9adefec7001dd447e04f882e3b70737ab74bee9669ec2dc7bba13654db8c7141e11b8f1fd6d845aba03fd6a9"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/parsers/branded.js",
-      "bytes": 306,
-      "sha512": "1c7629cb1d808569e5b98dce9f03d8ab09549904fd0eac90362494a4c48ec8b7a5a7cd75a814fc94ea9f2d158c52847b22e6c370852ad8c1749338b0be6802a7"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/parsers/catch.js",
-      "bytes": 305,
-      "sha512": "2ad023e33790ca2b4c7e8ec96f9ae8c5d1a662690aceabe274b9e4e5a3656589bfd9378a02aabb54a7ca8516c41317161b4761afc753b0af54c9577f839a16dc"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/parsers/date.js",
-      "bytes": 1568,
-      "sha512": "59d97ce6d47865d31aacc0f8b452d5723e1c2b7298cca78fcd646a24aade79eb6a9e58c80bfe6233fd1dda5a063ffff69fa685a2f19096c00da1f00382db48ab"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/parsers/default.js",
-      "bytes": 369,
-      "sha512": "4b2d2664a61a211f04737960bcb9205d7bb91eaf989980ab8d2fe4ce361f7ccae92b2dd364f90900e49cbcc28c28e12bdbc9d0f75387ba411ab4ef6078164c2a"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/parsers/effects.js",
-      "bytes": 430,
-      "sha512": "a24a74c9384d1fe0df706c1677a92a0f3551eef7f529c18a806680a893d29eb0721b7d87c4658738200fa657e2c9435c505fd8b4bc456e745dff59587452d4a6"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/parsers/enum.js",
-      "bytes": 258,
-      "sha512": "d7bd9c787c1b5eb955bf15e75041ba8308fec1daccb5f04d9c68a02e0858df3a9333b3ce842f678fc93be82d00aabe92714ee63c5cd16a6f73dee234c194959d"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/parsers/intersection.js",
-      "bytes": 2100,
-      "sha512": "d6c99a25ee1e51651ffb6bf0aa5032fe53a6e84dc288f95b905dcec41ae96c5488715bd13af7b3bd08eed55b1dc8cca0a821f2f8cb63650205e36558ef9eb1f2"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/parsers/literal.js",
-      "bytes": 756,
-      "sha512": "5661d23ee7cf0cfdadf421133208a4e84bc9fe3283c6aada70ae9f1761442f5f08d829355203e6df073b43d38b99d03cd3847daf963f00954b1deddaca79a47a"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/parsers/map.js",
-      "bytes": 1009,
-      "sha512": "ffe73601fe4eab257a3548def0ce6a868c1ac7933f44b424dc27a968841accccf7771d29a4ed4c9890c45e2813d4cae02dfe91166e6e680ecdeb391a4c9b51b8"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/parsers/nativeEnum.js",
-      "bytes": 732,
-      "sha512": "391db7a8095cd83a17b3aa27327184ccf9eecd78c9b901cf477eb75191c4fb0da45ca0a9630659949b5fc48ad23d4b312a9c41d22b88a1af23dc35211da5d2e5"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/parsers/never.js",
-      "bytes": 443,
-      "sha512": "e72a79a354d68bfbe0f43255e06f13a16e3f12b2639df342ca3f0847f6ea3fed68b7c6a29ba8e470bb21994810e9326bbeaaa98ae4bd491f7f40348b1aa19dca"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/parsers/null.js",
-      "bytes": 342,
-      "sha512": "6e588eb1fe365c6d0f80d1f74ad806ff0020106d68762504a7d17f7667532eb6c3c1b00817f92d3a96b38516bce980239a78679de2e99e9df222ea2fcb1bdd6a"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/parsers/nullable.js",
-      "bytes": 1393,
-      "sha512": "1cfe93f161c1bc3d6e3a6bbd24cfec504fb9c41bf5fcb28ff699597cc03a265af0e740d8e561ee61d2d97d7c1ed6ba1a7d2cdaa50dab59019e4a3d499fa8668f"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/parsers/number.js",
-      "bytes": 2333,
-      "sha512": "82618df56c37108758056d59dc5a94f8e46b3aa287f88e3e00980bf586a69a11ef6ef319fbc7a9be20e23396a2f0a8cfed610f692c489e321bd19aa8174d42dd"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/parsers/object.js",
-      "bytes": 2497,
-      "sha512": "c1663722eb4ef379016d1fd96c9610ab1165f9333521be8d336365b32dfc5620c509488214fdf9856467fe647b29671c854dcf9be48eedf9ab5ef7bbebed7cb7"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/parsers/optional.js",
-      "bytes": 843,
-      "sha512": "9e8ce269b40396678354ffbd23557d0bc5cf3274ea089a86558ee25b39e41804895e70ddee52a18849e3af5cf3ee635405074ca7869a49bf328817f57c563e2a"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/parsers/pipeline.js",
-      "bytes": 843,
-      "sha512": "d6d13316aa4a267c1341a744068c45c352fb77b3dea03bb54d3a65fe98a8e7978bb6590311df018dc93c4c5ba4a7ea86183933974357d2aa163857cde4bd4254"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/parsers/promise.js",
-      "bytes": 304,
-      "sha512": "bc51c5d12e75819be72d173367974d571002086ddd62f05b38cf50be0b204bdfa53c015b1b9db4f7d6520646f86cf24de8e79866235085fc1d4b0c26a2607680"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/parsers/readonly.js",
-      "bytes": 317,
-      "sha512": "0e64df12fb410dc3e0975795c09e987ecad7eafd6bea3471dd53d36414a1c348a926fde39417d16d8545b2fec31b4a49a1ea107bb54c8c4aebbce1cca1fa94b8"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/parsers/record.js",
-      "bytes": 2514,
-      "sha512": "8b4a2755908cee5d2473b85b76b0972d231ff5106d74121a2581a13f0162ce1edb8ef12777164d970e6a3f38c6016d8287caafedd3f1c6b20a493f64aeea38ac"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/parsers/set.js",
-      "bytes": 852,
-      "sha512": "c186763aef16f8c330b6e30a8297f1149b344c4faf919ee245246c2aeac7383acab16e2151cbb4ab93fc0a0318d3e2ee6513902a9a19af745bc1828b84cb36e9"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/parsers/string.js",
-      "bytes": 15365,
-      "sha512": "5c6fb62a0ccab353f7752e06bbc09fb40efeb81f069d53dbb8a20e612158680d9bf13d903c3404871e144738b85ae09e6bfffe82bc13729ff7f72f7e9beeb41c"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/parsers/tuple.js",
-      "bytes": 1270,
-      "sha512": "81bdf57bff99c3c39159d5019d2e65f480e1dec1a0bc928300e56d07a081c0b3ddd930803c3052bdbe8c66f88b7968a86b69e7f0f775efa53a0aca3eb52c2b24"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/parsers/undefined.js",
-      "bytes": 301,
-      "sha512": "e6f10dc451ee124b62e9830d34ff4b1e2787346dab2183e8e8f5bd3ed69ae6dc6071981a3fec5807b5f93a45f9579946d03589bf89875d182e571fd2ff424eb3"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/parsers/union.js",
-      "bytes": 3347,
-      "sha512": "ce2e08dba5e9a775f502c8ded9e2fd8dc36bad98bf4498f2821229f6e707111e7e6bbbbc1a36d87e277e26cf1d9b42d33d0bb847fa7b8da397a570e4bc1ad51e"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/parsers/unknown.js",
-      "bytes": 271,
-      "sha512": "61941e2a0c966c2a5751bc1795cf3b74291b0bb34b718f822ddaee5d63baca7c9499ce43832c76715124e0362095f1e286f9b547c045f8aa703595e4eb253d7b"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/selectParser.js",
-      "bytes": 5685,
-      "sha512": "5be7bfbd3614c273c2a040c5918d4efa8f558cb8191d8320f900411637ed404507df26e28e55ce3c6476456063a08fbd01f26d9dbca54e922566ce9981716ee9"
-    },
-    {
-      "path": "node_modules/zod-to-json-schema/dist/cjs/zodToJsonSchema.js",
-      "bytes": 3402,
-      "sha512": "aac1ffe08a392d5ddbd03d8ffbe7ed43b8a06915b50988c34aed316ae980fea2f388312e27473d8b472bfd2fa0e144e31ca05d3ee1f2b9772a1c450c5249e417"
     },
     {
       "path": "node_modules/zod-to-json-schema/dist/esm/Options.js",
@@ -504,24 +309,9 @@
       "sha512": "1b5c94caa9658b0a3af559622556bc73737115cd9cf18fac4c2fa48b66aae38ad84dd4a5dde2af72580a82f6c336d846951401557d80b515b1c858562d5d7ca0"
     },
     {
-      "path": "node_modules/zod/compile.js",
-      "bytes": 3008,
-      "sha512": "f113882f33c43d164baaf8e63146a318073c945483d4077288c17a5f6ee0ddfa197f02f4cb9a68945033cdb419eaa0741cb7e07f70e365a100f2058138d6a57d"
-    },
-    {
       "path": "node_modules/zod/index.js",
       "bytes": 422,
       "sha512": "67a893e336e3d6bc10d17afd2b59e7b4df862bbec38e82bd11f36367afadc402537331b24c98066a796039628d1d89fdf62a29147cc504acca42601304802c5b"
-    },
-    {
-      "path": "node_modules/zod/locales/index.js",
-      "bytes": 40,
-      "sha512": "fb26979f4bac82b5279fa5bdd714e1b39e8ac8ce86b41cf10b83dad3de4e7f15732e712a389645f0b5dfe69eabdbd1c2ff5f35f5aa5db3c4092b4e1cde99df40"
-    },
-    {
-      "path": "node_modules/zod/mini/index.js",
-      "bytes": 99,
-      "sha512": "360ff788122ef52989166528ae7eedf83fd76969f0355288c1e7023d85a5114d9428f59c653046b57940617a13a6d51f8be4ba79e2583e85a6a10459f4d659a5"
     },
     {
       "path": "node_modules/zod/package.json",
@@ -544,11 +334,6 @@
       "sha512": "160b766f6f30199ce55af1f82d4d63b849a02c28d13cbfda9b5ef301fbc3cd08ceb74fd635fb0c5e7bd0f002b6587946054dbad99177c487ce6244567b8c5098"
     },
     {
-      "path": "node_modules/zod/v3/helpers/enumUtil.js",
-      "bytes": 11,
-      "sha512": "4ee1c88f8c3f4e4cd34cb6c00339bf9d6d036ff4ade3af49e871cc8966b84c729d8b75492acc6413c9a664ac00a57958223ac13c4229da8c62ebe6a53e4f783f"
-    },
-    {
       "path": "node_modules/zod/v3/helpers/errorUtil.js",
       "bytes": 368,
       "sha512": "d8e40f3cda3c8ad7f083dce9b9f7c99ea6dfb2baa06ae486560c1742b88a52781f9bf00f268869e0720a8f270e3798e9733a258692de84b465bfb24de6226bbb"
@@ -557,11 +342,6 @@
       "path": "node_modules/zod/v3/helpers/parseUtil.js",
       "bytes": 3601,
       "sha512": "57bc9e72ae975d9459cc1fc30981a690df4b5dd88042f0eb8942b1ae8067a26e03c367720ce1ead67baa7bc9167402e18f225cfc363c12f6ee9ab82903614845"
-    },
-    {
-      "path": "node_modules/zod/v3/helpers/partialUtil.js",
-      "bytes": 11,
-      "sha512": "4ee1c88f8c3f4e4cd34cb6c00339bf9d6d036ff4ade3af49e871cc8966b84c729d8b75492acc6413c9a664ac00a57958223ac13c4229da8c62ebe6a53e4f783f"
     },
     {
       "path": "node_modules/zod/v3/helpers/typeAliases.js",
@@ -582,11 +362,6 @@
       "path": "node_modules/zod/v3/locales/en.js",
       "bytes": 5602,
       "sha512": "2c9a00b63c93ba876341d945e2b7cb337ef1a6a09165a4b8657448ee985b999c95798000517c07155f0460b143ede69119aef883459959a7a84fc45bced5f464"
-    },
-    {
-      "path": "node_modules/zod/v3/standard-schema.js",
-      "bytes": 11,
-      "sha512": "4ee1c88f8c3f4e4cd34cb6c00339bf9d6d036ff4ade3af49e871cc8966b84c729d8b75492acc6413c9a664ac00a57958223ac13c4229da8c62ebe6a53e4f783f"
     },
     {
       "path": "node_modules/zod/v3/types.js",
@@ -732,11 +507,6 @@
       "path": "node_modules/zod/v4/core/schemas.js",
       "bytes": 107291,
       "sha512": "c6da53548a5c4a4c4326335585cfdb63503e64f23c3be6fde10e52700a0596a0d91d4c84b08d3d622b7d23f319505daddbbc5da8f5b81d1d2ee991f464224344"
-    },
-    {
-      "path": "node_modules/zod/v4/core/standard-schema.js",
-      "bytes": 11,
-      "sha512": "4ee1c88f8c3f4e4cd34cb6c00339bf9d6d036ff4ade3af49e871cc8966b84c729d8b75492acc6413c9a664ac00a57958223ac13c4229da8c62ebe6a53e4f783f"
     },
     {
       "path": "node_modules/zod/v4/core/to-json-schema.js",
@@ -1107,11 +877,6 @@
       "path": "node_modules/zod/v4/mini/in-out.js",
       "bytes": 1623,
       "sha512": "4b0a835c4f4f9aa882b0a718088fb8534013ff54256550fb90de2c3418b385cbf252f59d907992b70beffd53b03dfb8780b87f6c9871b4028427d70054f17d31"
-    },
-    {
-      "path": "node_modules/zod/v4/mini/index.js",
-      "bytes": 81,
-      "sha512": "e9586390c8885bb22b8f41c6e72ef2163713d453c604c9cdf181f2d84397b054f15bcc1d6dc7b71e17a857ea2b613ca64ab4813f426ef7dadc5a81672a796cf9"
     },
     {
       "path": "node_modules/zod/v4/mini/iso.js",
