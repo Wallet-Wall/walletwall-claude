@@ -38,6 +38,7 @@ jobs:
             'LICENSE',
             'README.md',
             'PROVENANCE.json',
+            'assets/icon.png',
             'server/walletwall-mcp.mjs',
             'skills/vault-readiness/SKILL.md',
             'skills/walletwall-authority/SKILL.md',
@@ -52,6 +53,29 @@ jobs:
           if (plugin.name !== 'walletwall') throw new Error(`unexpected plugin name: ${plugin.name}`);
           if (!/^\d+\.\d+\.\d+$/.test(plugin.version ?? '')) throw new Error('plugin version must be explicit semver');
           if (typeof plugin.description !== 'string' || plugin.description.length === 0) throw new Error('plugin description required');
+
+          // The directory listing icon is the one file the WalletWall owner approved (2026-11-25). The directory reads it
+          // once, at the first portal save, so the manifest must name it and any other bytes must fail here.
+          const listingIcon = {
+            path: 'assets/icon.png',
+            bytes: 605502,
+            sha512: '15302974ac45f9e51f272d4e5241813e895423ccab9e0d71b8259d29b077873fb43047cd494d59856de2f2cac008d3c50969d110973498f43675f3b515a1f037',
+          };
+          if (plugin.icon !== `./${listingIcon.path}`) throw new Error(`plugin.json must name the approved listing icon as ./${listingIcon.path}`);
+          const icon = fs.readFileSync(listingIcon.path);
+          if (icon.length !== listingIcon.bytes || crypto.createHash('sha512').update(icon).digest('hex') !== listingIcon.sha512) {
+            throw new Error(`${listingIcon.path} is not the approved listing icon`);
+          }
+
+          // Listing links are public metadata, so each may point only at WalletWall's GitHub pages over https.
+          for (const key of ['homepage', 'repository', 'documentationUrl', 'supportUrl', 'privacyPolicyUrl']) {
+            if (!(key in plugin)) continue;
+            const url = typeof plugin[key] === 'string' && URL.canParse(plugin[key]) ? new URL(plugin[key]) : null;
+            if (url === null || url.protocol !== 'https:' || url.hostname !== 'github.com' || url.port !== '' ||
+              url.username !== '' || url.password !== '' || !url.pathname.startsWith('/Wallet-Wall/')) {
+              throw new Error(`plugin.json ${key} must be an https://github.com/Wallet-Wall/ link`);
+            }
+          }
 
           const mcp = JSON.parse(fs.readFileSync('.mcp.json', 'utf8'));
           if (JSON.stringify(Object.keys(mcp)) !== JSON.stringify(['walletwall'])) throw new Error('exactly one MCP server named walletwall is required');
@@ -98,6 +122,7 @@ jobs:
           set -euo pipefail
           node <<'NODE'
           const fs = require('node:fs');
+          const { posix } = require('node:path');
           const { execFileSync } = require('node:child_process');
 
           // A merge publishes the tracked tree, so read it from git rather than from the filesystem.
@@ -111,7 +136,7 @@ jobs:
           const payload = tracked.filter(({ path }) => !path.startsWith('.github/'));
           const under = prefix => payload.map(({ path }) => path).filter(path => path.startsWith(prefix)).sort();
 
-          const allowedRootEntries = ['.claude-plugin/', '.gitattributes', '.github/', '.mcp.json', 'LICENSE', 'PROVENANCE.json', 'README.md', 'node_modules/', 'server/', 'skills/'];
+          const allowedRootEntries = ['.claude-plugin/', '.gitattributes', '.github/', '.mcp.json', 'LICENSE', 'PROVENANCE.json', 'README.md', 'assets/', 'node_modules/', 'server/', 'skills/'];
           const rootEntries = new Set(tracked.map(({ path }) => (path.includes('/') ? `${path.split('/')[0]}/` : path)));
           const unexpectedRootEntries = [...rootEntries].filter(entry => !allowedRootEntries.includes(entry)).sort();
           const missingRootEntries = allowedRootEntries.filter(entry => !rootEntries.has(entry));
@@ -127,8 +152,9 @@ jobs:
             throw new Error(`.claude-plugin must hold only plugin.json: ${under('.claude-plugin/').join(', ')}`);
           }
           // Metadata only. Component keys (commands, agents, skills, hooks, mcpServers, lspServers, outputStyles)
-          // can inline or redirect executable surface, so none of them is allowed here.
-          const allowedPluginKeys = ['name', 'displayName', 'version', 'description', 'author', 'homepage', 'repository', 'license', 'keywords'];
+          // can inline or redirect executable surface, so none of them is allowed here. The directory listing fields
+          // (icon, documentationUrl, supportUrl, privacyPolicyUrl) are metadata; the verify step pins their values.
+          const allowedPluginKeys = ['name', 'displayName', 'version', 'description', 'author', 'homepage', 'repository', 'license', 'keywords', 'icon', 'documentationUrl', 'supportUrl', 'privacyPolicyUrl'];
           const plugin = JSON.parse(fs.readFileSync('.claude-plugin/plugin.json', 'utf8'));
           const forbiddenPluginKeys = Object.keys(plugin).filter(key => !allowedPluginKeys.includes(key));
           if (forbiddenPluginKeys.length > 0) throw new Error(`plugin.json keys outside the metadata allowlist: ${forbiddenPluginKeys.join(', ')}`);
@@ -138,6 +164,32 @@ jobs:
             .sort();
           if (JSON.stringify(under('skills/')) !== JSON.stringify(expectedSkillFiles)) {
             throw new Error(`skills must be exactly ${expectedSkillFiles.join(', ')}; found ${under('skills/').join(', ')}`);
+          }
+          // Skills are instructions only: none may pre-approve tools for the model.
+          for (const file of expectedSkillFiles) {
+            const frontMatter = /^---\r?\n([\s\S]*?)\r?\n---/.exec(fs.readFileSync(file, 'utf8'))?.[1] ?? '';
+            if (/^\s*allowed[-_]tools\s*:/im.test(frontMatter)) throw new Error(`${file} must not declare allowed-tools`);
+          }
+
+          if (JSON.stringify(under('assets/')) !== JSON.stringify(['assets/icon.png'])) {
+            throw new Error(`assets must hold only the listing icon assets/icon.png; found ${under('assets/').join(', ')}`);
+          }
+          // Every path the manifest names must be a tracked payload file inside the package: written ./relative, with no
+          // parent segment, backslash or other form a normalizer would rewrite. Regular-file mode is enforced above.
+          const payloadPaths = new Set(payload.map(({ path }) => path));
+          const named = [];
+          (function collect(value) {
+            if (typeof value === 'string') {
+              if (/^\.{0,2}[\\/]/.test(value)) named.push(value);
+            } else if (Array.isArray(value)) value.forEach(collect);
+            else if (value !== null && typeof value === 'object') Object.values(value).forEach(collect);
+          })(plugin);
+          for (const reference of named) {
+            const relative = reference.slice(2);
+            if (!reference.startsWith('./') || relative.includes('\\') || posix.normalize(relative) !== relative ||
+              relative.split('/').includes('..') || !payloadPaths.has(relative)) {
+              throw new Error(`plugin.json names a path that is not a payload file inside the package: ${reference}`);
+            }
           }
 
           const provenance = JSON.parse(fs.readFileSync('PROVENANCE.json', 'utf8'));
