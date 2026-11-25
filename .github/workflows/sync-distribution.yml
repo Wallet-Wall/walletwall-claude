@@ -41,13 +41,35 @@ jobs:
           echo "repo=$repo" >> "$GITHUB_OUTPUT"
           echo "sha=$sha" >> "$GITHUB_OUTPUT"
 
-      - name: Checkout exact reviewed source
+      # Same rule as CI's origin job: GitHub also serves, by SHA, commits that are on no canonical branch (pull-request
+      # refs, fork pull requests included), and this job later holds a contents: write token, so only a pinned commit
+      # reachable from the source repository's main may be installed and built here.
+      - name: Checkout canonical source history
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
-          repository: ${{ steps.pin.outputs.repo }}
-          ref: ${{ steps.pin.outputs.sha }}
+          repository: Wallet-Wall/walletwall-copilot
+          ref: main
+          fetch-depth: 0
           path: source
           persist-credentials: false
+
+      - name: Require the pinned commit on source main
+        working-directory: source
+        shell: bash
+        env:
+          PIN_SHA: ${{ steps.pin.outputs.sha }}
+        run: |
+          set -euo pipefail
+          if [ "$(git cat-file -t "$PIN_SHA" 2>/dev/null || true)" != commit ]; then
+            echo "::error::Pinned commit $PIN_SHA is not a commit in Wallet-Wall/walletwall-copilot branch or tag history."
+            exit 1
+          fi
+          if ! git merge-base --is-ancestor "$PIN_SHA" refs/remotes/origin/main; then
+            echo "::error::Pinned commit $PIN_SHA is not reachable from Wallet-Wall/walletwall-copilot main."
+            exit 1
+          fi
+          git checkout --quiet --detach "$PIN_SHA"
+          [ "$(git rev-parse HEAD)" = "$PIN_SHA" ]
 
       - name: Setup Node.js 22
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
@@ -70,19 +92,18 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          # Anchored, so only the top-level .git/ and .github/ are kept; CI's origin check uses the same boundary.
-          rsync -a --delete \
-            --exclude='/.git/' \
-            --exclude='/.github/' \
-            source/dist/claude-directory/ distribution/
+          # The generator owns plugin/ and nothing else; .github/ (this workflow, CI, the pin) is never touched. Both
+          # paths are local to this runner.
+          mkdir -p distribution/plugin
+          rsync -a --delete source/dist/claude-directory/ distribution/plugin/
 
       - name: Verify generated provenance pin
         shell: bash
         run: |
           set -euo pipefail
           expected='${{ steps.pin.outputs.sha }}'
-          actual=$(node -p "require('./distribution/PROVENANCE.json').sourceCommit")
-          repo=$(node -p "require('./distribution/PROVENANCE.json').sourceRepository")
+          actual=$(node -p "require('./distribution/plugin/PROVENANCE.json').sourceCommit")
+          repo=$(node -p "require('./distribution/plugin/PROVENANCE.json').sourceRepository")
           [[ "$actual" == "$expected" ]]
           [[ "$repo" == "Wallet-Wall/walletwall-copilot" ]]
 
@@ -93,7 +114,7 @@ jobs:
           PUBLISH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          git add -A -- . ':!.github'
+          git add -A -- plugin
           if git diff --cached --quiet; then
             echo 'Generated distribution already matches the pinned source.'
             exit 0

@@ -26,6 +26,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          # plugin/ is the installable plugin (the folder the directory reads and scans); .github/ is maintenance and CI.
+          cd plugin
           node <<'NODE'
           const fs = require('node:fs');
           const path = require('node:path');
@@ -86,7 +88,7 @@ jobs:
           const serializedMcp = JSON.stringify(mcp);
           if (/https?:\/\//i.test(serializedMcp)) throw new Error('Claude MCP config must not point to a remote server');
 
-          const pin = JSON.parse(fs.readFileSync('.github/source-pin.json', 'utf8'));
+          const pin = JSON.parse(fs.readFileSync('../.github/source-pin.json', 'utf8'));
           const provenance = JSON.parse(fs.readFileSync('PROVENANCE.json', 'utf8'));
           if (provenance.schemaVersion !== '1') throw new Error('unsupported provenance schema');
           if (provenance.sourceRepository !== pin.sourceRepository) throw new Error('provenance repository does not match source pin');
@@ -133,15 +135,24 @@ jobs:
               const space = record.indexOf(' ');
               return { mode: record.slice(0, space), path: record.slice(space + 1) };
             });
-          const payload = tracked.filter(({ path }) => !path.startsWith('.github/'));
+          const entriesOf = records => new Set(records.map(({ path }) => (path.includes('/') ? `${path.split('/')[0]}/` : path)));
+          const exactly = (label, allowed, entries) => {
+            const unexpected = [...entries].filter(entry => !allowed.includes(entry)).sort();
+            const missing = allowed.filter(entry => !entries.has(entry));
+            if (unexpected.length > 0) throw new Error(`unexpected ${label} entries: ${unexpected.join(', ')}`);
+            if (missing.length > 0) throw new Error(`missing ${label} entries: ${missing.join(', ')}`);
+          };
+          // The repository holds the installable plugin in plugin/ and its own maintenance and CI in .github/, nothing else.
+          exactly('repository root', ['.github/', 'plugin/'], entriesOf(tracked));
+          // `claude --plugin-dir .` at the repository root loads every plugin folder it finds there, so .github/ must hold
+          // nothing a plugin loader reads.
+          const pluginShaped = tracked.map(({ path }) => path).filter(path => /^\.github\/(?:\.claude-plugin\/|skills\/|commands\/|agents\/|hooks\/|\.mcp\.json$|\.lsp\.json$)/.test(path));
+          if (pluginShaped.length > 0) throw new Error(`.github/ holds plugin components: ${pluginShaped.join(', ')}`);
+          const payload = tracked.filter(({ path }) => path.startsWith('plugin/')).map(({ mode, path }) => ({ mode, path: path.slice('plugin/'.length) }));
           const under = prefix => payload.map(({ path }) => path).filter(path => path.startsWith(prefix)).sort();
-
-          const allowedRootEntries = ['.claude-plugin/', '.gitattributes', '.github/', '.mcp.json', 'LICENSE', 'PROVENANCE.json', 'README.md', 'assets/', 'node_modules/', 'server/', 'skills/'];
-          const rootEntries = new Set(tracked.map(({ path }) => (path.includes('/') ? `${path.split('/')[0]}/` : path)));
-          const unexpectedRootEntries = [...rootEntries].filter(entry => !allowedRootEntries.includes(entry)).sort();
-          const missingRootEntries = allowedRootEntries.filter(entry => !rootEntries.has(entry));
-          if (unexpectedRootEntries.length > 0) throw new Error(`unexpected root entries: ${unexpectedRootEntries.join(', ')}`);
-          if (missingRootEntries.length > 0) throw new Error(`missing root entries: ${missingRootEntries.join(', ')}`);
+          exactly('plugin', ['.claude-plugin/', '.gitattributes', '.mcp.json', 'LICENSE', 'PROVENANCE.json', 'README.md', 'assets/', 'node_modules/', 'server/', 'skills/'], entriesOf(payload));
+          // Every other check reads the plugin folder.
+          process.chdir('plugin');
 
           const irregular = payload.filter(({ mode }) => mode !== '100644');
           if (irregular.length > 0) {
@@ -208,6 +219,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          cd plugin
           node --input-type=module <<'NODE'
           import { spawn } from 'node:child_process';
 
@@ -300,6 +312,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          cd plugin
           if grep -RIE --exclude-dir=.git --exclude-dir=.github \
             'eth_sendRawTransaction|eth_sendTransaction|personal_sign|eth_signTransaction|wallet_sendCalls|sendTransaction\(|broadcastTransaction\(|transferFrom\(' \
             server skills .mcp.json; then
@@ -389,10 +402,11 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          # Ask rsync what a sync would change. The anchored excludes skip only the top-level .git/ and .github/, and
-          # --checksum without --times compares content, links, and modes rather than checkout timestamps.
-          options=(--recursive --links --perms --checksum --delete --dry-run --itemize-changes --exclude=/.git/ --exclude=/.github/)
-          changes=$(rsync "${options[@]}" source/dist/claude-directory/ distribution/)
+          # Ask rsync what a sync would change in plugin/, the only folder the generator owns. Both paths are local to this
+          # runner (a dry run that transmits nothing), and --checksum without --times compares content, links, and modes
+          # rather than checkout timestamps.
+          options=(--recursive --links --perms --checksum --delete --dry-run --itemize-changes)
+          changes=$(rsync "${options[@]}" source/dist/claude-directory/ distribution/plugin/)
           if [ -n "$changes" ]; then
             echo "::error::The committed payload is not the regeneration of the pinned source. A sync would change:"
             printf '%s\n' "$changes"

@@ -12,11 +12,11 @@
 - Source repository: `Wallet-Wall/walletwall-copilot`
 - Canonical source commit: `<sha or N/A>`
 - `.github/source-pin.json` updated if required: [ ]
-- `PROVENANCE.json` agrees with source pin if payload changed: [ ]
+- `plugin/PROVENANCE.json` agrees with source pin if the plugin changed: [ ]
 
 ### Boundary checks
 
-- [ ] No hand-maintained semantic fork was introduced in generated payload files.
+- [ ] No hand-maintained semantic fork was introduced in the generated plugin (`plugin/`).
 - [ ] No signing, custody, transaction construction, broadcast, trading, or fund-transfer capability was added.
 - [ ] No credential injection or silent remote-MCP substitution was added.
 - [ ] Local stdio remains the default execution path.

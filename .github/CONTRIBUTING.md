@@ -2,6 +2,13 @@
 
 `Wallet-Wall/walletwall-claude` is a generated distribution repository. It is intentionally **not** the source of truth for WalletWall evidence semantics, readiness rules, registries, MCP tools, or runtime behavior.
 
+## Repository layout
+
+- `plugin/` is the complete installable Claude plugin and the folder submitted to the Claude Directory (plugin path `plugin`). It is byte-for-byte the output of the source repository's generator at the commit pinned in `.github/source-pin.json`.
+- `.github/` holds this repository's own CI, source pin, sync workflow and policies. It is never installed and is not part of the plugin.
+
+Distribution CI requires exactly these two entries at the repository root, and requires `.github/` to hold nothing a Claude Code plugin loader reads.
+
 ## Where changes belong
 
 Open implementation changes in [`Wallet-Wall/walletwall-copilot`](https://github.com/Wallet-Wall/walletwall-copilot).
@@ -13,7 +20,7 @@ That includes changes to:
 - evidence semantics and invariant logic
 - stablecoin registries and authority records
 - Claude skills packaged into the distribution
-- `.claude-plugin/plugin.json`
+- `plugin/.claude-plugin/plugin.json`
 - the generated public README
 - runtime dependencies included in the Claude Directory package
 
@@ -28,7 +35,7 @@ Distribution-only repository governance may live under `.github/`, including:
 - security reporting guidance
 - contribution and pull-request templates
 
-Do not hand-edit generated payload files such as `server/`, `skills/`, `node_modules/`, `README.md`, `.mcp.json`, `.claude-plugin/`, `.gitattributes`, `LICENSE`, or `PROVENANCE.json` to change behavior. Those edits would create a semantic fork and will be overwritten by the next deterministic sync.
+Do not hand-edit the generated plugin in `plugin/`: `server/`, `skills/`, `node_modules/`, `assets/`, `README.md`, `.mcp.json`, `.claude-plugin/`, `.gitattributes`, `LICENSE` or `PROVENANCE.json` there. Never edit them to change behavior. Those edits would create a semantic fork and will be overwritten by the next deterministic sync.
 
 ## Required release chain
 
@@ -38,10 +45,10 @@ A normal release follows this chain:
 2. merge the source change;
 3. update `.github/source-pin.json` here to that canonical merged source SHA;
 4. let the sync workflow regenerate the distribution;
-5. verify `PROVENANCE.json` matches the source pin;
+5. verify `plugin/PROVENANCE.json` matches the source pin;
 6. require distribution CI to pass before merging the release PR.
 
-Distribution CI proves origin, not only self-consistency. Its `origin` job requires the pin to name `Wallet-Wall/walletwall-copilot` and a commit reachable from that repository's `main`, regenerates the package from that commit with the source's own generator, and fails on any difference from the committed tree outside `.git/` and `.github/`, including files that are missing from `PROVENANCE.json`. On a release PR that changes the pin, `origin` fails until the sync commit with the regenerated payload lands; that is expected.
+Distribution CI proves origin, not only self-consistency. Its `origin` job requires the pin to name `Wallet-Wall/walletwall-copilot` and a commit reachable from that repository's `main`, regenerates the package from that commit with the source's own generator, and fails on any difference from the committed `plugin/` folder, including files that are missing from `plugin/PROVENANCE.json`. The sync workflow applies the same rule before it installs or builds anything: it builds only a pinned commit that is reachable from the source repository's `main`. On a release PR that changes the pin, `origin` fails until the sync commit with the regenerated payload lands; that is expected.
 
 ## Security boundary
 
