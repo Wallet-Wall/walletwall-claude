@@ -4,9 +4,9 @@ WalletWall Claude is a generated, read-only distribution of the WalletWall Vault
 
 ## Security boundary
 
-The published Claude package runs locally over stdio and does not require WalletWall-hosted MCP execution. It does not inject credentials through `.mcp.json`, sign transactions or messages, custody assets, broadcast transactions, trade, transfer funds, expose arbitrary SQL, or provide generic blockchain-write capabilities.
+The published Claude package is the `plugin/` folder; `.github/` holds this repository's CI and policies and is never installed. The package runs locally over stdio and does not require WalletWall-hosted MCP execution. It does not inject credentials through `plugin/.mcp.json`, sign transactions or messages, custody assets, broadcast transactions, trade, transfer funds, expose arbitrary SQL, or provide generic blockchain-write capabilities.
 
-The distribution is generated from the exact source commit recorded in `.github/source-pin.json` and `PROVENANCE.json`. Changes to evidence semantics, readiness rules, registries, or MCP behavior must originate in `Wallet-Wall/walletwall-copilot` and pass its source-repository gates before propagation here.
+The distribution is generated from the exact source commit recorded in `.github/source-pin.json` and `plugin/PROVENANCE.json`. Changes to evidence semantics, readiness rules, registries, or MCP behavior must originate in `Wallet-Wall/walletwall-copilot` and pass its source-repository gates before propagation here.
 
 ## Reporting a vulnerability
 
